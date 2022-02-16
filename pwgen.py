@@ -8,17 +8,21 @@ while True:
         chars = string.ascii_letters + "!@#$%^&*()" + string.digits
         length = input("How many characters do you want your password to be?: ")
         count = input("How many passwords do you want to generate?: ")
-        csvinput = (input("Do you want to create a .csv file?: (Y / N) "))
+        csvinput = input("Do you want to create a .csv file?: (Y / N) ")
         count_pass = int(count)
         count_pass_list = list(count)
         length_pass = int(length)
         csv_answer = str(csvinput).lower()
+        if csv_answer.isdigit():
+            raise Exception("Answer not yes/no")
+        if not "yes" or "y" or "no" or "n":
+            raise Exception("Answer not yes/no")
         Basefilename = "passwords"
         Secondfilename = str(uuid.uuid4())
         CSVfiletag = ".csv"
         filename = f"{Basefilename}-{Secondfilename}{CSVfiletag}"
     except Exception as e:
-        print("ERROR: (INVALID INPUT/S) PLEASE TRY AGAIN!")
+        print(f"ERROR: {e} PLEASE TRY AGAIN!")
         continue
     else: 
         break
