@@ -32,7 +32,7 @@ def csvcreate():
         for row in password_list:
             for x in row:
                 f.write(str(x))
-            f.write
+            f.write('\n')
     print(f"{filename} has been created!")
     (exit)
 
