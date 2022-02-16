@@ -15,7 +15,7 @@ while True:
         csv_answer = str(csvinput).lower()
         if csv_answer.isdigit():
             raise Exception("Answer not yes/no")
-        if not "yes" or "y" or "no" or "n":
+        if csv_answer not in {"yes", "y", "no", "n"}:
             raise Exception("Answer not yes/no")
         Basefilename = "passwords"
         Secondfilename = str(uuid.uuid4())
