@@ -3,6 +3,7 @@ import secrets
 import csv
 import uuid
 from colorama import Fore, Style, Back
+from getpass import getpass
 
 print("Type -help for a list of commands!")
 
@@ -10,6 +11,7 @@ def helpcommand():
     print(Back.GREEN + Fore.BLACK + "List of commands:" + Style.RESET_ALL)
     print(Style.RESET_ALL + "-help (List of Commands)")
     print("-pwgen (Password Generator)")
+    print("-add (Add a password to password manager)")
     print("-exit (exits)")
 
 def main():
@@ -22,9 +24,51 @@ def main():
             pwgen_input()
         elif startinput == "-exit":
             exit()
+        elif startinput == "-add":
+            addpw()
         else:
             print(Fore.RED + f"{startinput} is not a valid command, type -help for a list of valid commands")
             continue
+
+def addpw():
+    while True:
+        URL = input("What is the URL?:")
+        Username = input("What is the username?:")
+        PasswordGen = input(f"Do you want to generate a random password for {URL} (Y/N):")
+        PasswordGenAnsw = str(PasswordGen).lower()
+        if PasswordGenAnsw not in {"yes", "y", "no", "n"}:
+            print(Fore.RED + f"{PasswordGenAnsw} is not a valid answer! Answer not yes/no")
+        if PasswordGenAnsw == "yes" or PasswordGenAnsw == "y":
+            print("placeholder")
+            break
+        if PasswordGenAnsw == "no" or PasswordGenAnsw == "n":
+            pwinput()
+            break
+
+def pwinput():
+    while True:
+        Password = getpass(Style.RESET_ALL + "Enter your password:")
+        PasswordCheck = str(Password)
+        PasswordConfirm = getpass("Confirm your password:")
+        if PasswordConfirm != (PasswordCheck):
+            print(Fore.RED + "PASSWORD DOES NOT MATCH! PLEASE TRY AGAIN!")
+            continue
+        if PasswordConfirm == (PasswordCheck):
+            print(Fore.GREEN + "Password has been added!")
+            print(Style.RESET_ALL)
+            anothpw()
+
+def anothpw():
+    while True:
+            AnotherPass = input(Style.RESET_ALL + "Do you want to add another password?")
+            AnotherPassL = str(AnotherPass).lower()
+            if AnotherPass not in {"yes", "y", "no", "n"}:
+                print(Fore.RED + f"{AnotherPass} is not a valid response! Answer not yes/no")
+            elif AnotherPass == "yes" or AnotherPass == "y":
+                addpw()
+            elif AnotherPass == "no" or AnotherPass == "n":
+                main()
+
 
 chars = string.ascii_letters + "!@#$%^&*()" + string.digits
 Basefilename = "passwords"
@@ -73,7 +117,7 @@ def csvorgen():
     if csv_answer == "y" or csv_answer == "yes":
         csvcreate()
     elif csv_answer == "n" or csv_answer == "no":
-        print(Fore.GREEN + f"Here is your randomly generated {length} character password(s):")
+        print(Fore.GREEN + f"Here are your randomly generated {length} character password(s):")
         for i in range(count_pass):
             print (Style.RESET_ALL+ Passwordgen())
             (exit)
