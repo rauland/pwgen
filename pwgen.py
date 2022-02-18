@@ -2,8 +2,25 @@ import string
 import secrets
 import csv
 import uuid
-import colorama
-from colorama import Fore, Style
+from colorama import Fore, Style, Back
+
+print("Type -help for a list of commands!")
+
+def helpcommand():
+    print(Back.GREEN + Fore.BLACK + "List of commands:" + Style.RESET_ALL)
+    print(Style.RESET_ALL + "-help (List of Commands)")
+    print("-pwgen (Password Generator)")
+
+while True:
+    startinput = input(Style.RESET_ALL+ "\nWhat would you like to do?:")
+    if startinput == "-help":
+        helpcommand()
+        continue
+    elif startinput == "-pwgen":
+        break
+    else:
+        print(Fore.RED + f"{startinput} is not a valid command, type -help for a list of valid commands")
+        continue
 
 chars = string.ascii_letters + "!@#$%^&*()" + string.digits
 Basefilename = "passwords"
