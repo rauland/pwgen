@@ -2,27 +2,33 @@ import string
 import secrets
 import csv
 import uuid
+import colorama
+from colorama import Fore, Style
+
+chars = string.ascii_letters + "!@#$%^&*()" + string.digits
+Basefilename = "passwords"
+CSVfiletag = ".csv"
+Secondfilename = str(uuid.uuid4())
+filename = f"{Basefilename}-{Secondfilename}{CSVfiletag}"
+
+def csvERROR():
+    if csv_answer.isdigit():
+        raise Exception(Fore.RED + "Answer not yes/no")
+    if csv_answer not in {"yes", "y", "no", "n"}:
+        raise Exception(Fore.RED + "Answer not yes/no")
 
 while True:
     try:
-        chars = string.ascii_letters + "!@#$%^&*()" + string.digits
-        length = input("How many characters do you want your password to be?: ")
+        length = input(Style.RESET_ALL + "How many characters do you want your password to be?: ")
         count = input("How many passwords do you want to generate?: ")
         csvinput = input("Do you want to create a .csv file?: (Y / N) ")
         count_pass = int(count)
         count_pass_list = list(count)
         length_pass = int(length)
         csv_answer = str(csvinput).lower()
-        if csv_answer.isdigit():
-            raise Exception("Answer not yes/no")
-        if csv_answer not in {"yes", "y", "no", "n"}:
-            raise Exception("Answer not yes/no")
-        Basefilename = "passwords"
-        Secondfilename = str(uuid.uuid4())
-        CSVfiletag = ".csv"
-        filename = f"{Basefilename}-{Secondfilename}{CSVfiletag}"
+        csvERROR()
     except Exception as e:
-        print(f"ERROR: {e} PLEASE TRY AGAIN!")
+        print(Fore.RED + f"ERROR: {e} PLEASE TRY AGAIN!")
         continue
     else: 
         break
@@ -44,8 +50,9 @@ def csvorgen():
     if csv_answer == "y" or csv_answer == "yes":
         csvcreate()
     elif csv_answer == "n" or csv_answer == "no":
+        print(Fore.GREEN + f"Here is your randomly generated {length} character password(s):")
         for i in range(count_pass):
-            print (Passwordgen())
+            print (Style.RESET_ALL+ Passwordgen())
             (exit)
 
 password_list = list(Passwordgen()for i in range(count_pass))
