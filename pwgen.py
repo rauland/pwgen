@@ -10,17 +10,21 @@ def helpcommand():
     print(Back.GREEN + Fore.BLACK + "List of commands:" + Style.RESET_ALL)
     print(Style.RESET_ALL + "-help (List of Commands)")
     print("-pwgen (Password Generator)")
+    print("-exit (exits)")
 
-while True:
-    startinput = input(Style.RESET_ALL+ "\nWhat would you like to do?:")
-    if startinput == "-help":
-        helpcommand()
-        continue
-    elif startinput == "-pwgen":
-        break
-    else:
-        print(Fore.RED + f"{startinput} is not a valid command, type -help for a list of valid commands")
-        continue
+def main():
+    while True:
+        startinput = input(Style.RESET_ALL+ "\nWhat would you like to do?:")
+        if startinput == "-help":
+            helpcommand()
+            continue
+        elif startinput == "-pwgen":
+            pwgen_input()
+        elif startinput == "-exit":
+            exit()
+        else:
+            print(Fore.RED + f"{startinput} is not a valid command, type -help for a list of valid commands")
+            continue
 
 chars = string.ascii_letters + "!@#$%^&*()" + string.digits
 Basefilename = "passwords"
@@ -28,39 +32,41 @@ CSVfiletag = ".csv"
 Secondfilename = str(uuid.uuid4())
 filename = f"{Basefilename}-{Secondfilename}{CSVfiletag}"
 
-def csvERROR():
-    if csv_answer.isdigit():
-        raise Exception(Fore.RED + "Answer not yes/no")
-    if csv_answer not in {"yes", "y", "no", "n"}:
-        raise Exception(Fore.RED + "Answer not yes/no")
 
-while True:
-    try:
-        length = input(Style.RESET_ALL + "How many characters do you want your password to be?: ")
-        count = input("How many passwords do you want to generate?: ")
-        csvinput = input("Do you want to create a .csv file?: (Y / N) ")
-        count_pass = int(count)
-        count_pass_list = list(count)
-        length_pass = int(length)
-        csv_answer = str(csvinput).lower()
-        csvERROR()
-    except Exception as e:
-        print(Fore.RED + f"ERROR: {e} PLEASE TRY AGAIN!")
-        continue
-    else: 
-        break
+def pwgen_input():
+    while True:
+        try:
+            global length, count, csvinput, csv_answer, length_pass, count_pass, count_pass_list
+            length = input(Style.RESET_ALL + "How many characters do you want your password to be?: ")
+            count = input("How many passwords do you want to generate?: ")
+            csvinput = input("Do you want to create a .csv file?: (Y / N) ")
+            count_pass = int(count)
+            count_pass_list = list(count)
+            length_pass = int(length)
+            csv_answer = str(csvinput).lower()
+            if csv_answer.isdigit():
+                raise Exception(Fore.RED + "Answer not yes/no")
+            if csv_answer not in {"yes", "y", "no", "n"}:
+                raise Exception(Fore.RED + "Answer not yes/no")
+        except Exception as e:
+            print(Fore.RED + f"ERROR: {e} PLEASE TRY AGAIN!")
+            continue
+        else: 
+            csvorgen()
+            break
 
 def Passwordgen():
     password = "".join(secrets.choice(chars) for i in range(length_pass))
     return password
 
 def csvcreate():
+    password_list = list(Passwordgen()for i in range(count_pass))
     with open(filename, "w") as f:
         for row in password_list:
             for x in row:
                 f.write(str(x))
             f.write('\n')
-    print(f"{filename} has been created!")
+    print(Fore.GREEN + f"{filename} has been created!")
     (exit)
 
 def csvorgen():
@@ -72,6 +78,4 @@ def csvorgen():
             print (Style.RESET_ALL+ Passwordgen())
             (exit)
 
-password_list = list(Passwordgen()for i in range(count_pass))
-
-csvorgen()
+main()
