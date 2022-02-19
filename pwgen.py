@@ -1,8 +1,6 @@
-from pickle import TRUE
 import string
 import secrets
 import csv
-from tkinter import FALSE
 import uuid
 import os
 from colorama import Fore, Style, Back
@@ -79,9 +77,9 @@ def pw_prompt(strprompt):
             if pwanswer not in {"yes", "y", "no", "n"}:
                 print(Fore.RED + f"{pwanswer} is not a valid response! Yes/No expected")
             elif pwanswer == "yes" or pwanswer == "y":
-                return TRUE
+                return True
             elif pwanswer == "no" or pwanswer == "n":
-                return FALSE
+                return False
 
 # TODO: Code sitting outside of a function
 chars = string.ascii_letters + "!@#$%^&*()" + string.digits
