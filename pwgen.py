@@ -81,14 +81,6 @@ def pw_prompt(strprompt):
             elif pwanswer == "no" or pwanswer == "n":
                 return False
 
-# TODO: Code sitting outside of a function
-chars = string.ascii_letters + "!@#$%^&*()" + string.digits
-Basefilename = "passwords"
-CSVfiletag = ".csv"
-Secondfilename = str(uuid.uuid4())
-filename = f"{Basefilename}-{Secondfilename}{CSVfiletag}"
-
-
 def pwgen_input():
     while True:
         try:
@@ -103,10 +95,12 @@ def pwgen_input():
             break
 
 def Passwordgen(length_pass):
+    chars = string.ascii_letters + "!@#$%^&*()" + string.digits
     password = "".join(secrets.choice(chars) for i in range(length_pass))
     return password
 
-def csvcreate(length_pass, count_pass):
+def csvcreate(Basefilename, length_pass, count_pass):
+    filename = f"{Basefilename}-{str(uuid.uuid4())}.csv"
     password_list = list(Passwordgen(length_pass)for i in range(count_pass))
     with open(filename, "w") as f:
         for row in password_list:
@@ -118,7 +112,7 @@ def csvcreate(length_pass, count_pass):
 
 def csvorgen(csv_answer, length_pass, count_pass):
     if csv_answer:
-        csvcreate(length_pass, count_pass),
+        csvcreate("passwords", length_pass, count_pass),
     else:
         print(Fore.GREEN + f"Here are your randomly generated {length_pass} character password(s):")
         for i in range(count_pass):
