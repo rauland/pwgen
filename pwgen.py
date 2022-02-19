@@ -2,8 +2,12 @@ import string
 import secrets
 import csv
 import uuid
+import os
 from colorama import Fore, Style, Back
 from getpass import getpass
+
+# Clears console
+os.system('cls' if os.name == 'nt' else 'clear')
 
 print(Fore.GREEN + """\n      
       :::::::::     :::       :::       ::::::::       ::::::::::       ::::    ::: 
