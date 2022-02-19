@@ -47,19 +47,18 @@ def main():
         else:
             print(Fore.RED + f"{startinput} is not a valid command, type -help for a list of valid commands")
             continue
-#  addpw()
+
 def addpw():
     while True:
         URL = input("What is the URL?:")
         Username = input("What is the username?:")
         PasswordGen = pw_prompt(f"Do you want to generate a random password for {URL} (Y/N):")
         if PasswordGen:
-            print("placeholder")
-            break
-        else:
+            print(Passwordgen(length_pass=16))
+        else: 
             pwinput()
-            if not pw_prompt("Do you want to add another password?"):
-               break 
+        if not pw_prompt("Do you want to add another password?"):
+            break 
 
 def pwinput():
     while True:
@@ -76,9 +75,9 @@ def pwinput():
 
 def pw_prompt(strprompt):
     while True:
-            pwanswer = input(Style.RESET_ALL + strprompt)
+            pwanswer = input(Style.RESET_ALL + strprompt).lower()
             if pwanswer not in {"yes", "y", "no", "n"}:
-                print(Fore.RED + f"{pwanswer} is not a valid response! Answer not yes/no")
+                print(Fore.RED + f"{pwanswer} is not a valid response! Yes/No expected")
             elif pwanswer == "yes" or pwanswer == "y":
                 return TRUE
             elif pwanswer == "no" or pwanswer == "n":
@@ -95,7 +94,6 @@ filename = f"{Basefilename}-{Secondfilename}{CSVfiletag}"
 def pwgen_input():
     while True:
         try:
-            global length_pass, count_pass
             length_pass = int(input(Style.RESET_ALL + "How many characters do you want your password to be?: "))
             count_pass = int(input("How many passwords do you want to generate?: "))
             csv_answer = pw_prompt("Do you want to create a .csv file?: (Y / N) ")
@@ -104,16 +102,15 @@ def pwgen_input():
             print(Fore.RED + f"ERROR: {e} PLEASE TRY AGAIN!")
             continue
         else: 
-            csvorgen(csv_answer)
+            csvorgen(csv_answer, length_pass, count_pass)
             break
 
-# TODO: Pass length_pass as a over write-able parameter
-def Passwordgen():
+def Passwordgen(length_pass):
     password = "".join(secrets.choice(chars) for i in range(length_pass))
     return password
 
-def csvcreate():
-    password_list = list(Passwordgen()for i in range(count_pass))
+def csvcreate(length_pass, count_pass):
+    password_list = list(Passwordgen(length_pass)for i in range(count_pass))
     with open(filename, "w") as f:
         for row in password_list:
             for x in row:
@@ -122,14 +119,13 @@ def csvcreate():
     print(Fore.GREEN + f"{filename} has been created!")
     (exit)
 
-# TODO: Pass length_pass as a parameter
-def csvorgen(csv_answer):
+def csvorgen(csv_answer, length_pass, count_pass):
     if csv_answer:
-        csvcreate()
+        csvcreate(length_pass, count_pass),
     else:
         print(Fore.GREEN + f"Here are your randomly generated {length_pass} character password(s):")
         for i in range(count_pass):
-            print (Style.RESET_ALL+ Passwordgen())
+            print (Style.RESET_ALL+ Passwordgen(length_pass))
             (exit)
 
 main()
