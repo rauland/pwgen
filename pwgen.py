@@ -5,7 +5,7 @@ import uuid
 from colorama import Fore, Style, Back
 from getpass import getpass
 
-print("""      
+print(Fore.GREEN + """\n      
       :::::::::     :::       :::       ::::::::       ::::::::::       ::::    ::: 
      :+:    :+:    :+:       :+:      :+:    :+:      :+:              :+:+:   :+:  
     +:+    +:+    +:+       +:+      +:+             +:+              :+:+:+  +:+   
@@ -13,9 +13,9 @@ print("""
   +#+           +#+ +#+#+ +#+      +#+   +#+#      +#+              +#+  +#+#+#     
  #+#            #+#+# #+#+#       #+#    #+#      #+#              #+#   #+#+#      
 ###             ###   ###         ########       ##########       ###    ####      
-""")
+\n""")
 
-print("Type -help for a list of commands!")
+print(Style.RESET_ALL + "Type -help for a list of commands!")
 
 def helpcommand():
     print(Back.GREEN + Fore.BLACK + "List of commands:" + Style.RESET_ALL)
