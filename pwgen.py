@@ -6,9 +6,10 @@ import os
 from colorama import Fore, Style, Back
 from getpass import getpass
 
-# Clears console
+# Clears console, command on windows is 'cls', unix is 'clear'
 os.system('cls' if os.name == 'nt' else 'clear')
 
+# This prints the logo of PWgen, after the console clear. Hard-coded but eh.
 print(Fore.GREEN + """\n      
       :::::::::     :::       :::       ::::::::       ::::::::::       ::::    ::: 
      :+:    :+:    :+:       :+:      :+:    :+:      :+:              :+:+:   :+:  
@@ -28,6 +29,7 @@ def helpcommand():
     print("-add (Add a password to password manager)")
     print("-exit (exits)")
 
+# TODO: Do we need '-' before a menu item, for example -help. Why not use help?
 def main():
     while True:
         startinput = input(Style.RESET_ALL+ "\nWhat would you like to do?:")
@@ -43,7 +45,7 @@ def main():
         else:
             print(Fore.RED + f"{startinput} is not a valid command, type -help for a list of valid commands")
             continue
-
+# TODO: addpw(),pwinput(),anothpw() are very similar code. We could possibly reduce it to 1 function
 def addpw():
     while True:
         URL = input("What is the URL?:")
@@ -83,7 +85,7 @@ def anothpw():
             elif AnotherPass == "no" or AnotherPass == "n":
                 main()
 
-
+# TODO: Code sitting outside of a function
 chars = string.ascii_letters + "!@#$%^&*()" + string.digits
 Basefilename = "passwords"
 CSVfiletag = ".csv"
@@ -113,6 +115,7 @@ def pwgen_input():
             csvorgen()
             break
 
+# TODO: Pass length_pass as a over write-able parameter
 def Passwordgen():
     password = "".join(secrets.choice(chars) for i in range(length_pass))
     return password
@@ -127,6 +130,7 @@ def csvcreate():
     print(Fore.GREEN + f"{filename} has been created!")
     (exit)
 
+# TODO: Pass csv_answer as a parameter
 def csvorgen():
     if csv_answer == "y" or csv_answer == "yes":
         csvcreate()
