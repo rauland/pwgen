@@ -95,7 +95,6 @@ def pwgen_input():
             length_pass = int(input(Style.RESET_ALL + "How many characters do you want your password to be?: "))
             count_pass = int(input("How many passwords do you want to generate?: "))
             csv_answer = pw_prompt("Do you want to create a .csv file?: (Y / N) ")
-            count_pass_list = list(str(count_pass))
         except Exception as e:
             print(Fore.RED + f"ERROR: {e} PLEASE TRY AGAIN!")
             continue
