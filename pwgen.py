@@ -74,9 +74,9 @@ def pwinput():
             print(Style.RESET_ALL)
             break
 
-def pw_prompt(question):
+def pw_prompt(strprompt):
     while True:
-            pwanswer = input(Style.RESET_ALL + question)
+            pwanswer = input(Style.RESET_ALL + strprompt)
             if pwanswer not in {"yes", "y", "no", "n"}:
                 print(Fore.RED + f"{pwanswer} is not a valid response! Answer not yes/no")
             elif pwanswer == "yes" or pwanswer == "y":
@@ -95,23 +95,16 @@ filename = f"{Basefilename}-{Secondfilename}{CSVfiletag}"
 def pwgen_input():
     while True:
         try:
-            global length, count, csvinput, csv_answer, length_pass, count_pass, count_pass_list
-            length = input(Style.RESET_ALL + "How many characters do you want your password to be?: ")
-            count = input("How many passwords do you want to generate?: ")
-            csvinput = input("Do you want to create a .csv file?: (Y / N) ")
-            count_pass = int(count)
-            count_pass_list = list(count)
-            length_pass = int(length)
-            csv_answer = str(csvinput).lower()
-            if csv_answer.isdigit():
-                raise Exception(Fore.RED + "Answer not yes/no")
-            if csv_answer not in {"yes", "y", "no", "n"}:
-                raise Exception(Fore.RED + "Answer not yes/no")
+            global length_pass, count_pass
+            length_pass = int(input(Style.RESET_ALL + "How many characters do you want your password to be?: "))
+            count_pass = int(input("How many passwords do you want to generate?: "))
+            csv_answer = pw_prompt("Do you want to create a .csv file?: (Y / N) ")
+            count_pass_list = list(str(count_pass))
         except Exception as e:
             print(Fore.RED + f"ERROR: {e} PLEASE TRY AGAIN!")
             continue
         else: 
-            csvorgen()
+            csvorgen(csv_answer)
             break
 
 # TODO: Pass length_pass as a over write-able parameter
@@ -129,12 +122,12 @@ def csvcreate():
     print(Fore.GREEN + f"{filename} has been created!")
     (exit)
 
-# TODO: Pass csv_answer as a parameter
-def csvorgen():
-    if csv_answer == "y" or csv_answer == "yes":
+# TODO: Pass length_pass as a parameter
+def csvorgen(csv_answer):
+    if csv_answer:
         csvcreate()
-    elif csv_answer == "n" or csv_answer == "no":
-        print(Fore.GREEN + f"Here are your randomly generated {length} character password(s):")
+    else:
+        print(Fore.GREEN + f"Here are your randomly generated {length_pass} character password(s):")
         for i in range(count_pass):
             print (Style.RESET_ALL+ Passwordgen())
             (exit)
