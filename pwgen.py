@@ -1,6 +1,8 @@
+from pickle import TRUE
 import string
 import secrets
 import csv
+from tkinter import FALSE
 import uuid
 import os
 from colorama import Fore, Style, Back
@@ -45,21 +47,19 @@ def main():
         else:
             print(Fore.RED + f"{startinput} is not a valid command, type -help for a list of valid commands")
             continue
-# TODO: addpw(),pwinput(),anothpw() are very similar code. We could possibly reduce it to 1 function
+#  addpw()
 def addpw():
     while True:
         URL = input("What is the URL?:")
         Username = input("What is the username?:")
-        PasswordGen = input(f"Do you want to generate a random password for {URL} (Y/N):")
-        PasswordGenAnsw = str(PasswordGen).lower()
-        if PasswordGenAnsw not in {"yes", "y", "no", "n"}:
-            print(Fore.RED + f"{PasswordGenAnsw} is not a valid answer! Answer not yes/no")
-        if PasswordGenAnsw == "yes" or PasswordGenAnsw == "y":
+        PasswordGen = pw_prompt(f"Do you want to generate a random password for {URL} (Y/N):")
+        if PasswordGen:
             print("placeholder")
             break
-        if PasswordGenAnsw == "no" or PasswordGenAnsw == "n":
+        else:
             pwinput()
-            break
+            if not pw_prompt("Do you want to add another password?"):
+               break 
 
 def pwinput():
     while True:
@@ -72,18 +72,17 @@ def pwinput():
         if PasswordConfirm == (PasswordCheck):
             print(Fore.GREEN + "Password has been added!")
             print(Style.RESET_ALL)
-            anothpw()
+            break
 
-def anothpw():
+def pw_prompt(question):
     while True:
-            AnotherPass = input(Style.RESET_ALL + "Do you want to add another password?")
-            AnotherPassL = str(AnotherPass).lower()
-            if AnotherPass not in {"yes", "y", "no", "n"}:
-                print(Fore.RED + f"{AnotherPass} is not a valid response! Answer not yes/no")
-            elif AnotherPass == "yes" or AnotherPass == "y":
-                addpw()
-            elif AnotherPass == "no" or AnotherPass == "n":
-                main()
+            pwanswer = input(Style.RESET_ALL + question)
+            if pwanswer not in {"yes", "y", "no", "n"}:
+                print(Fore.RED + f"{pwanswer} is not a valid response! Answer not yes/no")
+            elif pwanswer == "yes" or pwanswer == "y":
+                return TRUE
+            elif pwanswer == "no" or pwanswer == "n":
+                return FALSE
 
 # TODO: Code sitting outside of a function
 chars = string.ascii_letters + "!@#$%^&*()" + string.digits
