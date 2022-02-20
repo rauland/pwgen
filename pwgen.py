@@ -7,11 +7,9 @@ import pwobj
 from colorama import Fore, Style, Back
 from getpass import getpass
 
-# Clears console, command on windows is 'cls', unix is 'clear'
-os.system('cls' if os.name == 'nt' else 'clear')
-
-# This prints the logo of PWgen, after the console clear. Hard-coded but eh.
-print(Fore.GREEN + """\n      
+def logo():
+    """This prints the logo of PWgen"""
+    print(Fore.GREEN + """\n      
       :::::::::     :::       :::       ::::::::       ::::::::::       ::::    ::: 
      :+:    :+:    :+:       :+:      :+:    :+:      :+:              :+:+:   :+:  
     +:+    +:+    +:+       +:+      +:+             +:+              :+:+:+  +:+   
@@ -20,8 +18,6 @@ print(Fore.GREEN + """\n
  #+#            #+#+# #+#+#       #+#    #+#      #+#              #+#   #+#+#      
 ###             ###   ###         ########       ##########       ###    ####      
 \n""")
-
-print(Style.RESET_ALL + "Type -help for a list of commands!")
 
 def helpcommand():
     print(Back.GREEN + Fore.BLACK + "List of commands:" + Style.RESET_ALL)
@@ -32,6 +28,10 @@ def helpcommand():
     print("-exit (exits)")
 
 def main():
+    # Clears console, command on windows is 'cls', unix is 'clear'
+    os.system('cls' if os.name == 'nt' else 'clear')
+    logo()
+    print(Style.RESET_ALL + "Type -help for a list of commands!")
     password_list = []
     while True:
         startinput = input(Style.RESET_ALL+ "\nWhat would you like to do?:")
@@ -50,8 +50,8 @@ def main():
             print(Fore.RED + f"{startinput} is not a valid command, type -help for a list of valid commands")
             continue
 
-# Creates password object, returns as list 
 def addpw(password_list =[]):
+    """Creates password object, returns as list"""
     while True:
         url = input("What is the URL?:")
         username = input("What is the username?:")
@@ -66,8 +66,8 @@ def addpw(password_list =[]):
             break
     return password_list
 
-# Inputs and confirms custom password
 def pwinput():
+    """Inputs and confirms custom password"""
     while True:
         Password = getpass(Style.RESET_ALL + "Enter your password:")
         PasswordCheck = str(Password)
@@ -80,8 +80,8 @@ def pwinput():
             print(Style.RESET_ALL)
             return PasswordConfirm
 
-# Shows passwords, accepts password_list as param, default is [] if not param passed
 def showpw(password_list = []):
+    """Shows passwords, accepts password_list as param, default is [] if not param passed"""
     if password_list == []:
         print("No passwords have been added yet")
         return()
@@ -91,8 +91,8 @@ def showpw(password_list = []):
         print(f'Password: {pw.pw}')
         print(f'')
 
-# Prompts and checks yes no answer
 def yes_no_prompt(strprompt):
+    """Prompts and checks yes no answer"""
     while True:
             pwanswer = input(Style.RESET_ALL + strprompt).lower()
             if pwanswer not in {"yes", "y", "no", "n"}:
@@ -102,8 +102,8 @@ def yes_no_prompt(strprompt):
             elif pwanswer == "no" or pwanswer == "n":
                 return False
 
-# Asks param for csvorgen
 def pwgen_input():
+    """Asks param for csvorgen"""
     while True:
         try:
             length_pass = int(input(Style.RESET_ALL + "How many characters do you want your password to be?: "))
@@ -116,14 +116,14 @@ def pwgen_input():
             csvorgen(csv_answer, length_pass, count_pass)
             break
 
-# Generates password from length param
 def Passwordgen(length_pass):
+    """Generates password from length param"""
     chars = string.ascii_letters + "!@#$%^&*()" + string.digits
     password = "".join(secrets.choice(chars) for i in range(length_pass))
     return password
 
-# Creates CSV file
 def csvcreate(Basefilename, length_pass, count_pass):
+    """Creates CSV file"""
     filename = f"{Basefilename}-{str(uuid.uuid4())}.csv"
     password_list = list(Passwordgen(length_pass)for i in range(count_pass))
     with open(filename, "w") as f:
@@ -133,13 +133,12 @@ def csvcreate(Basefilename, length_pass, count_pass):
             f.write('\n')
     print(Fore.GREEN + f"{filename} has been created!")
 
-# Accepts csv_answer, calls csvcreate or prints requested list based on answer
 def csvorgen(csv_answer, length_pass, count_pass):
+    """Accepts csv_answer, calls csvcreate or prints requested list based on answer"""
     if csv_answer:
         csvcreate("passwords", length_pass, count_pass),
     else:
         print(Fore.GREEN + f"Here are your randomly generated {length_pass} character password(s):")
-        # TODO: I in range not used
         for i in range(count_pass):
             print (Style.RESET_ALL+ Passwordgen(length_pass))
 
