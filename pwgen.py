@@ -32,6 +32,7 @@ def helpcommand():
 
 # TODO: Do we need '-' before a menu item, for example -help. Why not use help?
 def main():
+    password_list = []
     while True:
         startinput = input(Style.RESET_ALL+ "\nWhat would you like to do?:")
         if startinput == "-help":
@@ -41,25 +42,28 @@ def main():
             pwgen_input()
         elif startinput == "-exit":
             exit()
-        elif startinput == "-add":
-            addpw()
+        elif startinput == "-add":          
+            password_list = addpw(password_list)
+            print(f"{password_list[0].pw}")
         else:
             print(Fore.RED + f"{startinput} is not a valid command, type -help for a list of valid commands")
             continue
 
-def addpw():
+# Creates password object, returns as list 
+def addpw(password_list =[]):
     while True:
         url = input("What is the URL?:")
         username = input("What is the username?:")
-        passwordgen = pw_prompt(f"Do you want to generate a random password for {url} (Y/N):")
+        passwordgen = yes_no_prompt(f"Do you want to generate a random password for {url} (Y/N):")
         if passwordgen:
             print(Passwordgen(length_pass=16))
             pw = Passwordgen(length_pass=16)
         else: 
             pw = pwinput()
-        if not pw_prompt("Do you want to add another password?"):
+        if not yes_no_prompt("Do you want to add another password?"):
             break
-        saved_password = pwobj.Password(url,username,pw)
+    password_list = password_list + [pwobj.Password(url,username,pw)]
+    return password_list
 
 def pwinput():
     while True:
@@ -74,7 +78,8 @@ def pwinput():
             print(Style.RESET_ALL)
             return PasswordConfirm
 
-def pw_prompt(strprompt):
+# Prompts and checks yes no answer
+def yes_no_prompt(strprompt):
     while True:
             pwanswer = input(Style.RESET_ALL + strprompt).lower()
             if pwanswer not in {"yes", "y", "no", "n"}:
@@ -89,7 +94,7 @@ def pwgen_input():
         try:
             length_pass = int(input(Style.RESET_ALL + "How many characters do you want your password to be?: "))
             count_pass = int(input("How many passwords do you want to generate?: "))
-            csv_answer = pw_prompt("Do you want to create a .csv file?: (Y / N) ")
+            csv_answer = yes_no_prompt("Do you want to create a .csv file?: (Y / N) ")
         except Exception as e:
             print(Fore.RED + f"ERROR: {e} PLEASE TRY AGAIN!")
             continue
