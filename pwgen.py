@@ -67,6 +67,7 @@ def addpw(password_list =[]):
     password_list = password_list + [pwobj.Password(url,username,pw)]
     return password_list
 
+# Inputs and confirms custom password
 def pwinput():
     while True:
         Password = getpass(Style.RESET_ALL + "Enter your password:")
@@ -80,6 +81,7 @@ def pwinput():
             print(Style.RESET_ALL)
             return PasswordConfirm
 
+# Shows passwords, accepts password_list as param, default is [] if not param passed
 def showpw(password_list = []):
     if password_list == []:
         print("No passwords have been added yet")
@@ -127,15 +129,14 @@ def csvcreate(Basefilename, length_pass, count_pass):
                 f.write(str(x))
             f.write('\n')
     print(Fore.GREEN + f"{filename} has been created!")
-    (exit)
 
 def csvorgen(csv_answer, length_pass, count_pass):
     if csv_answer:
         csvcreate("passwords", length_pass, count_pass),
     else:
         print(Fore.GREEN + f"Here are your randomly generated {length_pass} character password(s):")
+        # TODO: I in range not used
         for i in range(count_pass):
             print (Style.RESET_ALL+ Passwordgen(length_pass))
-            (exit)
 
 main()
