@@ -85,10 +85,11 @@ def showpw(password_list = []):
     if password_list == []:
         print("No passwords have been added yet")
         return()
-    for i in range(len(password_list)):
-        print(password_list[i].url)
-        print(password_list[i].username)
-        print(password_list[i].pw)
+    for pw in password_list:
+        print(f'URL: {pw.url}')
+        print(f'Username: {pw.username}')
+        print(f'Password: {pw.pw}')
+        print(f'')
 
 # Prompts and checks yes no answer
 def yes_no_prompt(strprompt):
@@ -101,6 +102,7 @@ def yes_no_prompt(strprompt):
             elif pwanswer == "no" or pwanswer == "n":
                 return False
 
+# Asks param for csvorgen
 def pwgen_input():
     while True:
         try:
@@ -114,11 +116,13 @@ def pwgen_input():
             csvorgen(csv_answer, length_pass, count_pass)
             break
 
+# Generates password from length param
 def Passwordgen(length_pass):
     chars = string.ascii_letters + "!@#$%^&*()" + string.digits
     password = "".join(secrets.choice(chars) for i in range(length_pass))
     return password
 
+# Creates CSV file
 def csvcreate(Basefilename, length_pass, count_pass):
     filename = f"{Basefilename}-{str(uuid.uuid4())}.csv"
     password_list = list(Passwordgen(length_pass)for i in range(count_pass))
@@ -129,6 +133,7 @@ def csvcreate(Basefilename, length_pass, count_pass):
             f.write('\n')
     print(Fore.GREEN + f"{filename} has been created!")
 
+# Accepts csv_answer, calls csvcreate or prints requested list based on answer
 def csvorgen(csv_answer, length_pass, count_pass):
     if csv_answer:
         csvcreate("passwords", length_pass, count_pass),
