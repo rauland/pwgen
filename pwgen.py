@@ -57,8 +57,8 @@ def addpw(password_list =[]):
         username = input("What is the username?:")
         passwordgen = yes_no_prompt(f"Do you want to generate a random password for {url} (Y/N):")
         if passwordgen:
-            print(Passwordgen(length_pass=16))
             pw = Passwordgen(length_pass=16)
+            print(pw)
         else: 
             pw = pwinput()
         password_list = password_list + [pwobj.Password(url,username,pw)]
