@@ -31,7 +31,6 @@ def helpcommand():
     print("-show (Show list of passwords)")
     print("-exit (exits)")
 
-# TODO: Do we need '-' before a menu item, for example -help. Why not use help?
 def main():
     password_list = []
     while True:
@@ -62,9 +61,9 @@ def addpw(password_list =[]):
             pw = Passwordgen(length_pass=16)
         else: 
             pw = pwinput()
+        password_list = password_list + [pwobj.Password(url,username,pw)]
         if not yes_no_prompt("Do you want to add another password?"):
             break
-    password_list = password_list + [pwobj.Password(url,username,pw)]
     return password_list
 
 # Inputs and confirms custom password
@@ -85,7 +84,7 @@ def pwinput():
 def showpw(password_list = []):
     if password_list == []:
         print("No passwords have been added yet")
-        return
+        return()
     for i in range(len(password_list)):
         print(password_list[i].url)
         print(password_list[i].username)
