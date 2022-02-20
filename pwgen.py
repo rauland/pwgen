@@ -3,6 +3,7 @@ import secrets
 import csv
 import uuid
 import os
+import pwobj
 from colorama import Fore, Style, Back
 from getpass import getpass
 
@@ -48,15 +49,17 @@ def main():
 
 def addpw():
     while True:
-        URL = input("What is the URL?:")
-        Username = input("What is the username?:")
-        PasswordGen = pw_prompt(f"Do you want to generate a random password for {URL} (Y/N):")
-        if PasswordGen:
+        url = input("What is the URL?:")
+        username = input("What is the username?:")
+        passwordgen = pw_prompt(f"Do you want to generate a random password for {url} (Y/N):")
+        if passwordgen:
             print(Passwordgen(length_pass=16))
+            pw = Passwordgen(length_pass=16)
         else: 
-            pwinput()
+            pw = pwinput()
         if not pw_prompt("Do you want to add another password?"):
-            break 
+            break
+        saved_password = pwobj.Password(url,username,pw)
 
 def pwinput():
     while True:
@@ -69,7 +72,7 @@ def pwinput():
         if PasswordConfirm == (PasswordCheck):
             print(Fore.GREEN + "Password has been added!")
             print(Style.RESET_ALL)
-            break
+            return PasswordConfirm
 
 def pw_prompt(strprompt):
     while True:
