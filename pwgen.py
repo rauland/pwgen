@@ -57,7 +57,7 @@ def addpw(password_list =[]):
         else: 
             pw = pwinput()
         password_list = password_list + [pwobj.Password(url,username,pw)]
-        if not yes_no_prompt("Do you want to add another password?"):
+        if not yes_no_prompt("Do you want to add another password? Y/n:"):
             break
     return password_list
 
