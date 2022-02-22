@@ -22,11 +22,15 @@ def helpcommand():
     print("-show (Show list of passwords)")
     print("-exit (exits)")
 
-def main():
-    # Clears console, command on windows is 'cls', unix is 'clear'
+def clear_console():
+    """Clears console, command on windows is 'cls', unix is 'clear'"""
     os.system('cls' if os.name == 'nt' else 'clear')
+
+def main():
+    clear_console()
     logo()
     print(Style.RESET_ALL + "Type -help for a list of commands!")
+    # This creates a empty password list
     password_list = []
     while True:
         startinput = input(Style.RESET_ALL+ "\nWhat would you like to do?:")
@@ -91,18 +95,22 @@ def yes_no_prompt(strprompt):
     while True:
             pwanswer = input(Style.RESET_ALL + strprompt).lower()
             if pwanswer not in {"yes", "y", "no", "n"}:
-                print(Fore.RED + f"{pwanswer} is not a valid response! Yes/No expected")
+                print(Fore.RED + f"{pwanswer} is not a valid response! Yes or no is expected")
             elif pwanswer == "yes" or pwanswer == "y":
                 return True
             elif pwanswer == "no" or pwanswer == "n":
                 return False
 
 def pwgen_input():
-    """Asks param for csvorgen"""
+    """Asks params for csvorgen"""
     while True:
         try:
             length_pass = int(input(Style.RESET_ALL + "How many characters do you want your password to be?: "))
+            if length_pass > 50:
+                raise Exception(f"{length_pass} is too long, it must be lower than 50")
             count_pass = int(input("How many passwords do you want to generate?: "))
+            if count_pass > 99:
+                raise Exception(f"{count_pass} is too many, it must be lower than 99")
             csv_answer = yes_no_prompt("Do you want to create a .csv file?: (Y / N) ")
         except Exception as e:
             print(Fore.RED + f"ERROR: {e} PLEASE TRY AGAIN!")
