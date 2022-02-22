@@ -1,9 +1,4 @@
-import string
-import secrets
-import csv
-import uuid
-import os
-import pwobj
+import string, secrets, csv, uuid, os, pwobj
 from colorama import Fore, Style, Back
 from getpass import getpass
 
