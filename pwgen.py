@@ -2,18 +2,6 @@ import string, secrets, csv, uuid, os, pwobj
 from colorama import Fore, Style, Back
 from getpass import getpass
 
-def logo():
-    """This prints the logo of PWgen"""
-    print(Fore.GREEN + """\n      
-      :::::::::     :::       :::       ::::::::       ::::::::::       ::::    ::: 
-     :+:    :+:    :+:       :+:      :+:    :+:      :+:              :+:+:   :+:  
-    +:+    +:+    +:+       +:+      +:+             +:+              :+:+:+  +:+   
-   +#++:++#+     +#+  +:+  +#+      :#:             +#++:++#         +#+ +:+ +#+    
-  +#+           +#+ +#+#+ +#+      +#+   +#+#      +#+              +#+  +#+#+#     
- #+#            #+#+# #+#+#       #+#    #+#      #+#              #+#   #+#+#      
-###             ###   ###         ########       ##########       ###    ####      
-\n""")
-
 def helpcommand():
     print(Back.GREEN + Fore.BLACK + "List of commands:" + Style.RESET_ALL)
     print(Style.RESET_ALL + "-help (List of Commands)")
@@ -27,13 +15,14 @@ def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def main():
+    print(Fore.GREEN)
     clear_console()
-    logo()
+    pwobj.logo.print_logo()
     print(Style.RESET_ALL + "Type -help for a list of commands!")
     # This creates a empty password list
     password_list = []
     while True:
-        startinput = input(Style.RESET_ALL+ "\nWhat would you like to do?:")
+        startinput = input(Style.RESET_ALL+ "\nWhat would you like to do?:") #TODO Add rstrip() function to inputs
         if startinput == "-help":
             helpcommand()
             continue
@@ -60,7 +49,7 @@ def addpw(password_list =[]):
             print(pw)
         else: 
             pw = pwinput()
-        password_list = password_list + [pwobj.Password(url,username,pw)]
+        password_list += [pwobj.Password(url,username,pw)]
         if not yes_no_prompt("Do you want to add another password? Y/n:"):
             break
     return password_list
@@ -84,10 +73,10 @@ def showpw(password_list = []):
     if password_list == []:
         print("No passwords have been added yet")
         return()
-    for pw in password_list:
-        print(f'URL: {pw.url}')
-        print(f'Username: {pw.username}')
-        print(f'Password: {pw.pw}')
+    for pwobj in password_list:
+        print(f'URL: {pwobj.url}')
+        print(f'Username: {pwobj.username}')
+        print(f'Password: {pwobj.pw}')
         print(f'')
 
 def yes_no_prompt(strprompt):
