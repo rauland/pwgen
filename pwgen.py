@@ -1,30 +1,19 @@
-import string, secrets, csv, uuid, os, pwobj
+import string, secrets, uuid, pwd
+from logo import print_logo, clear_console, help_command
 from colorama import Fore, Style, Back
 from getpass import getpass
-
-def helpcommand():
-    print(Back.GREEN + Fore.BLACK + "List of commands:" + Style.RESET_ALL)
-    print(Style.RESET_ALL + "-help (List of Commands)")
-    print("-pwgen (Password Generator)")
-    print("-add (Add a password to password manager)")
-    print("-show (Show list of passwords)")
-    print("-exit (exits)")
-
-def clear_console():
-    """Clears console, command on windows is 'cls', unix is 'clear'"""
-    os.system('cls' if os.name == 'nt' else 'clear')
 
 def main():
     print(Fore.GREEN)
     clear_console()
-    pwobj.logo.print_logo()
+    print_logo()
     print(Style.RESET_ALL + "Type -help for a list of commands!")
     # This creates a empty password list
     password_list = []
     while True:
         startinput = input(Style.RESET_ALL+ "\nWhat would you like to do?:") #TODO Add rstrip() function to inputs
         if startinput == "-help":
-            helpcommand()
+            help_command()
             continue
         elif startinput == "-pwgen":
             pwgen_input()
@@ -49,7 +38,7 @@ def addpw(password_list =[]):
             print(pw)
         else: 
             pw = pwinput()
-        password_list += [pwobj.Password(url,username,pw)]
+        password_list += [pwd.Password(url,username,pw)]
         if not yes_no_prompt("Do you want to add another password? Y/n:"):
             break
     return password_list
@@ -73,10 +62,10 @@ def showpw(password_list = []):
     if password_list == []:
         print("No passwords have been added yet")
         return()
-    for pwobj in password_list:
-        print(f'URL: {pwobj.url}')
-        print(f'Username: {pwobj.username}')
-        print(f'Password: {pwobj.pw}')
+    for pwd in password_list:
+        print(f'URL: {pwd.url}')
+        print(f'Username: {pwd.username}')
+        print(f'Password: {pwd.pw}')
         print(f'')
 
 def yes_no_prompt(strprompt):
