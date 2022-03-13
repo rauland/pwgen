@@ -26,7 +26,6 @@ class Master:
         self.accounts += [Account(username,pw,url=url)]
         if not yes_no_prompt("Do you want to add another password? Y/n:"):
             break
-    #return self.accounts
 
   def showpw(self):
     """Shows passwords, accepts account_list as param, default is [] if not param passed"""
