@@ -1,5 +1,13 @@
 from pwgen import yes_no_prompt, pwinput, passwordgen
 from csvgen import csvcreate
+import pickle
+
+def load():
+  savefile = 'saved-accounts\savefile.data'
+  f = open(savefile,'rb')
+  account = pickle.load(f)
+  f.close()
+  return account
 
 class Account:
   def __init__(self,username, password, url ='',email=''):
@@ -39,6 +47,12 @@ class Master:
         print(f'Username: {acc.username}')
         print(f'Password: {acc.password}')
         print(f'')
-  
-  def save_acc(self):
-    csvcreate(account_list = self.accounts,Basefilename=f"saved-accounts\Saved-ID-{self.id}")
+
+  def save(self):
+    savefile = 'saved-accounts\savefile.data'
+    f = open(savefile, 'wb')
+    pickle.dump(self, f)
+    f.close
+
+  def export_acc(self):
+    csvcreate(account_list = self.accounts,Basefilename=f"csv-export\Saved-ID-{self.id}")
