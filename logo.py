@@ -23,4 +23,6 @@ def help_command():
     print("-pwgen (Password Generator)")
     print("-add (Add a password to password manager)")
     print("-show (Show list of passwords)")
+    print("-save (Saves account)")
+    print("-export (Export passwords to CSV)")
     print("-exit (exits)")
