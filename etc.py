@@ -1,6 +1,6 @@
+import string, secrets, uuid
 from getpass import getpass
 from colorama import Fore, Style, Back
-import string, secrets, uuid
 
 def yes_no_prompt(strprompt):
     """Prompts and checks yes no answer"""
