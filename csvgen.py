@@ -22,7 +22,7 @@ def csvgen():
 
 def csvcreate(Basefilename, length_pass, count_pass):
     """Creates CSV file"""
-    filename = f"{Basefilename}-{str(uuid.uuid4())}.csv"
+    filename = f"csv-export\{Basefilename}-{str(uuid.uuid4())}.csv"
     account_list = list(passwordgen(length_pass)for i in range(count_pass))
     with open(filename, "w") as f:
         for row in account_list:
