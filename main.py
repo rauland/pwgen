@@ -23,6 +23,8 @@ def main():
             test_account.addpw()
         elif startinput =="-show":
             test_account.showpw()
+        elif startinput =="-save":
+            test_account.save_acc()    
         else:
             print(Fore.RED + f"{startinput} is not a valid command, type -help for a list of valid commands")
             continue

@@ -1,4 +1,5 @@
 from pwgen import yes_no_prompt, pwinput, passwordgen
+from csvgen import csvcreate
 
 class Account:
   def __init__(self,username, password, url ='',email=''):
@@ -10,6 +11,7 @@ class Account:
 class Master:
   def __init__(self, email, password):
     Account.__init__(self, email, password)
+    self.id = str(1)
     self.accounts = []
 
   def addpw(self):
@@ -23,7 +25,7 @@ class Master:
             print(pw)
         else: 
             pw = pwinput()
-        self.accounts += [Account(username,pw,url=url)]
+        self.accounts += [Account(username,pw,url)]
         if not yes_no_prompt("Do you want to add another password? Y/n:"):
             break
 
@@ -37,3 +39,6 @@ class Master:
         print(f'Username: {acc.username}')
         print(f'Password: {acc.password}')
         print(f'')
+  
+  def save_acc(self):
+    csvcreate(account_list = self.accounts,Basefilename=f"saved-accounts\Saved-ID-{self.id}")
