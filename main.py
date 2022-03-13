@@ -9,8 +9,12 @@ def main():
     print_logo()
     print(Style.RESET_ALL + "Type -help for a list of commands!")
     # This creates a empty password list
-    #test_account = Master("admin@url.com.au","password")
-    test_account = load()
+    
+    try:
+        account = load()
+    except OSError as e:
+        account = Master("admin@url.com.au","password")
+        
     while True:
         startinput = input(Style.RESET_ALL+ "\nWhat would you like to do?:") #TODO Add rstrip() function to inputs
         if startinput == "-help":
@@ -21,13 +25,13 @@ def main():
         elif startinput == "-exit":
             exit()
         elif startinput == "-add":          
-            test_account.addpw()
+            account.addpw()
         elif startinput =="-show":
-            test_account.showpw()
+            account.showpw()
         elif startinput =="-save":
-            test_account.save()
+            account.save()
         elif startinput =="-export":
-            test_account.export_acc()    
+            account.export_acc()    
         else:
             print(Fore.RED + f"{startinput} is not a valid command, type -help for a list of valid commands")
             continue
