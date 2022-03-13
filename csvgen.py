@@ -1,6 +1,6 @@
 import uuid
 from colorama import Fore, Style, Back
-from etc import yes_no_prompt, pwinput, passwordgen
+from pwgen import yes_no_prompt, pwinput, passwordgen
 
 def csvgen():
     """Asks params for csvorgen"""
