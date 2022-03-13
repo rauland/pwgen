@@ -20,6 +20,15 @@ def csvgen():
             csvorgen(csv_answer, length_pass, count_pass)
             break
 
+def csvorgen(csv_answer, length_pass, count_pass):
+    """Accepts csv_answer, calls csvcreate or prints requested list based on answer"""
+    if csv_answer:
+        csvcreate("passwords", length_pass, count_pass),
+    else:
+        print(Fore.GREEN + f"Here are your randomly generated {length_pass} character password(s):")
+        for i in range(count_pass):
+            print (Style.RESET_ALL+ passwordgen(length_pass))
+
 def csvcreate(Basefilename, length_pass, count_pass):
     """Creates CSV file"""
     filename = f"csv-export\{Basefilename}-{str(uuid.uuid4())}.csv"
@@ -31,11 +40,3 @@ def csvcreate(Basefilename, length_pass, count_pass):
             f.write('\n')
     print(Fore.GREEN + f"{filename} has been created!")
 
-def csvorgen(csv_answer, length_pass, count_pass):
-    """Accepts csv_answer, calls csvcreate or prints requested list based on answer"""
-    if csv_answer:
-        csvcreate("passwords", length_pass, count_pass),
-    else:
-        print(Fore.GREEN + f"Here are your randomly generated {length_pass} character password(s):")
-        for i in range(count_pass):
-            print (Style.RESET_ALL+ passwordgen(length_pass))
