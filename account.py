@@ -1,4 +1,4 @@
-from etc import yes_no_prompt, pwinput, passwordgen
+from pwgen import yes_no_prompt, pwinput, passwordgen
 
 class Account:
   def __init__(self,username, password, url ='',email=''):
