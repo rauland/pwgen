@@ -4,12 +4,11 @@ from account import Account, Master, load
 from csvgen import csvgen
 
 def main():
-    print(Fore.GREEN)
     clear_console()
-    print_logo()
+    print_logo(Fore.RED)
     print(Style.RESET_ALL + "Type -help for a list of commands!")
-    # This creates a empty password list
     
+    # Creates a generic account if one is not found
     try:
         account = load()
     except OSError as e:

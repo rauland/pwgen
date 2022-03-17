@@ -1,6 +1,6 @@
 import uuid
 from colorama import Fore, Style, Back
-from pwgen import yes_no_prompt, pwinput, passwordgen
+from pwgen import yes_no_prompt, pwinput, secretgen
 
 def csvgen():
     """Asks params for csv_or_gen"""
@@ -22,14 +22,14 @@ def csvgen():
             else:
                 print(Fore.GREEN + f"Here are your randomly generated {length_pass} character password(s):")
                 for i in range(count_pass):
-                    print (Style.RESET_ALL+ passwordgen(length_pass))
+                    print (Style.RESET_ALL+ secretgen(length_pass))
             break
 
 def csvcreate(length_pass = 0, count_pass = 0, Basefilename="csv-export\passwords", account_list =[]):
     """Creates CSV file"""
     filename = f"{Basefilename}-{str(uuid.uuid4())}.csv"
     if account_list == []:
-        account_list = list(passwordgen(length_pass)for i in range(count_pass))
+        account_list = list(secretgen(length_pass)for i in range(count_pass))
         with open(filename, "w") as f:
             for row in account_list:
                 for x in row:

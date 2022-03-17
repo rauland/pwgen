@@ -1,8 +1,8 @@
 import os
 from colorama import Fore, Style, Back
 
-def print_logo():
-    logo = Fore.GREEN + """\n      
+def print_logo(colour = Fore.GREEN):
+    logo = colour + """\n      
       :::::::::     :::       :::       ::::::::       ::::::::::       ::::    ::: 
      :+:    :+:    :+:       :+:      :+:    :+:      :+:              :+:+:   :+:  
     +:+    +:+    +:+       +:+      +:+             +:+              :+:+:+  +:+   
@@ -12,6 +12,7 @@ def print_logo():
 ###             ###   ###         ########       ##########       ###    ####      
 \n"""
     print(logo)
+    Style.RESET_ALL
 
 def clear_console():
     """Clears console, command on windows is 'cls', unix is 'clear'"""

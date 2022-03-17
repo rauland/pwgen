@@ -1,4 +1,5 @@
-from pwgen import yes_no_prompt, pwinput, passwordgen
+from doctest import master
+from pwgen import yes_no_prompt, pwinput, secretgen
 from csvgen import csvcreate
 import pickle
 
@@ -18,8 +19,8 @@ class Account:
 
 class Master:
   def __init__(self, email, password):
+    self.ref = secretgen(8)
     Account.__init__(self, email, password)
-    self.id = str(1)
     self.accounts = []
 
   def addpw(self):
@@ -29,7 +30,7 @@ class Master:
         username = input("What is the username?:")
         password = yes_no_prompt(f"Do you want to generate a random password for {url} (Y/N):")
         if password:
-            pw = passwordgen(length_pass=16)
+            pw = secretgen(length_pass=16)
             print(pw)
         else: 
             pw = pwinput()
@@ -38,7 +39,7 @@ class Master:
             break
 
   def showpw(self):
-    """Shows passwords, accepts account_list as param, default is [] if not param passed"""
+    """Shows passwords, accepts account_list as param, default is [] if no param passed"""
     if self.accounts == []:
         print("No passwords have been added yet")
         return()
@@ -55,4 +56,4 @@ class Master:
     f.close
 
   def export_acc(self):
-    csvcreate(account_list = self.accounts,Basefilename=f"csv-export\Saved-ID-{self.id}")
+    csvcreate(account_list = self.accounts,Basefilename=f"csv-export\Saved-ref-{self.ref}")
