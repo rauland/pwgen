@@ -2,6 +2,7 @@ from consolemenu import *
 from consolemenu.items import *
 from csvgen import csvgen
 from account import *
+from logo import *
 
 def mainmenu():
     """Function for main menu"""
@@ -10,9 +11,9 @@ def mainmenu():
     try:
         account = load()
     except OSError as e:
-        account = Master("admin@url.com.au","password")
+        account = Master("admin@url.com.au","password")    
 
-    menu = ConsoleMenu("PasswordGen", "A simple password manager made in python.")
+    menu = ConsoleMenu(print_logo)
     function_item = FunctionItem("Password generator", csvgen) # Menu for password generator
     function_item_1 = FunctionItem("Add password", account.addpw)
     function_item_2 = FunctionItem("Show list of passwords", account.showpw)
