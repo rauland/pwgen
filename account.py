@@ -43,12 +43,14 @@ class Master:
     """Shows passwords, accepts account_list as param, default is [] if no param passed"""
     if self.accounts == []:
         print("No passwords have been added yet")
+        input("Press enter to go back to the main menu.")
         return()
     for acc in self.accounts:
         print(f'URL: {acc.url}')
         print(f'Username: {acc.username}')
         print(f'Password: {acc.password}')
         print(f'')
+    input("Press enter to go back to the main menu")
 
   def save(self):
     savefile = 'saved-accounts\savefile.data'
