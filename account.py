@@ -36,6 +36,7 @@ class Master:
             pw = pwinput()
         self.accounts += [Account(username,pw,url)]
         if not yes_no_prompt("Do you want to add another password? Y/n:"):
+            input("Press enter to go back to the main menu")
             break
 
   def showpw(self):
