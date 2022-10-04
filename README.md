@@ -2,7 +2,7 @@
 
 Simple password manager made with Python.
 
-#### Installation
+## Installation
 
 **Dependencies:**
 
