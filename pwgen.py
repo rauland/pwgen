@@ -1,16 +1,16 @@
-import string, secrets, uuid
+import string, secrets
 from getpass import getpass
-from colorama import Fore, Style, Back
+from colorama import Fore, Style
 
-def yes_no_prompt(strprompt):
-    """Prompts and checks yes no answer"""
+def prompt(answer):
+    """Prompts and checks yes no check"""
     while True:
-        pwanswer = input(Style.RESET_ALL + strprompt).lower()
-        if pwanswer not in {"yes", "y", "no", "n"}:
-            print(Fore.RED + f"{pwanswer} is not a valid response! Yes or no is expected")
-        elif pwanswer == "yes" or pwanswer == "y":
+        check = input(Style.RESET_ALL + answer).lower()
+        if check not in {"yes", "y", "no", "n"}:
+            print(Fore.RED + f"{check} is not a valid response! Yes or no is expected")
+        elif check == "yes" or check == "y":
             return True
-        elif pwanswer == "no" or pwanswer == "n":
+        elif check == "no" or check == "n":
             return False
 
 def pwinput():

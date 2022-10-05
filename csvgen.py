@@ -1,9 +1,9 @@
 import uuid
-from colorama import Fore, Style, Back
-from pwgen import yes_no_prompt, pwinput, secretgen
+from colorama import Fore, Style
+from pwgen import prompt, secretgen
 
-def csvgen():
-    """Asks params for csv_or_gen"""
+def generate():
+    """Asks params for csvcreate"""
     while True:
         try:
             length_pass = int(input(Style.RESET_ALL + "How many characters do you want your password to be?: "))
@@ -12,13 +12,13 @@ def csvgen():
             count_pass = int(input("How many passwords do you want to generate?: "))
             if count_pass > 99:
                 raise Exception(f"{count_pass} is too many, it must be lower than 99")
-            csv_answer = yes_no_prompt("Do you want to create a .csv file?: (Y / N) ")
+            answer = prompt("Do you want to create a .csv file?: (Y / N) ")
         except Exception as e:
             print(Fore.RED + f"ERROR: {e} PLEASE TRY AGAIN!")
             continue
         else:
-            if csv_answer:
-                csvcreate(length_pass, count_pass)
+            if answer:
+                create(length_pass, count_pass)
             else:
                 print(Fore.GREEN + f"Here are your randomly generated {length_pass} character password(s):")
                 for i in range(count_pass):
@@ -26,7 +26,7 @@ def csvgen():
             input("Press enter to go back to the main menu")
             break
 
-def csvcreate(length_pass = 0, count_pass = 0, Basefilename="csv-export\passwords", account_list =[]):
+def create(length_pass = 0, count_pass = 0, Basefilename="csv-export\passwords", account_list =[]):
     """Creates CSV file"""
     filename = f"{Basefilename}-{str(uuid.uuid4())}.csv"
     if account_list == []:

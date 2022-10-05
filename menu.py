@@ -1,20 +1,25 @@
 from consolemenu import *
 from consolemenu.items import *
-from csvgen import csvgen
+import csvgen
 from account import *
 from logo import *
+from pathlib import Path
 
 def mainmenu():
     """Function for main menu"""
 
-    # Creates a generic account if one is not found
+    # Creates a generic master account if one is not found
     try:
         account = load()
     except OSError as e:
         account = Master("admin@url.com.au","password")    
 
+    # Creates folders if none exist
+    Path("saved-accounts").mkdir(parents=True, exist_ok=True)
+    Path("csv-export").mkdir(parents=True, exist_ok=True)
+
     menu = ConsoleMenu(print_logo)
-    function_item = FunctionItem("Password generator", csvgen) # Menu for password generator
+    function_item = FunctionItem("Password generator", csvgen.generate) # Menu for password generator
     function_item_1 = FunctionItem("Add password", account.addpw)
     function_item_2 = FunctionItem("Show list of passwords", account.showpw)
     function_item_3 = FunctionItem("Save account", account.save)

@@ -1,5 +1,4 @@
-import os
-from colorama import Fore, Style, Back
+from colorama import Fore, Style
 
 def print_logo(colour = Fore.GREEN):
     logo = colour + """\n      

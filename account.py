@@ -1,7 +1,6 @@
-from pwgen import yes_no_prompt, pwinput, secretgen
-from csvgen import csvcreate
+from pwgen import prompt, pwinput, secretgen
+import csvgen
 import pickle
-from pathlib import Path
 
 def load():
   savefile = 'saved-accounts\savefile.data'
@@ -28,14 +27,14 @@ class Master:
     while True:
         url = input("What is the URL?:")
         username = input("What is the username?:")
-        password = yes_no_prompt(f"Do you want to generate a random password for {url} (Y/N):")
+        password = prompt(f"Do you want to generate a random password for {url} (Y/N):")
         if password:
             pw = secretgen(length_pass=16)
             print(pw)
         else: 
             pw = pwinput()
         self.accounts += [Account(username,pw,url)]
-        if not yes_no_prompt("Do you want to add another password? Y/n:"):
+        if not prompt("Do you want to add another password? Y/n:"):
             input("Press enter to go back to the main menu")
             break
 
@@ -53,11 +52,10 @@ class Master:
     input("Press enter to go back to the main menu")
 
   def save(self):
-    Path("saved-accounts").mkdir(parents=True, exist_ok=True)
     savefile = 'saved-accounts\savefile.data'
     f = open(savefile, 'wb')
     pickle.dump(self, f)
     f.close
 
   def export_acc(self):
-    csvcreate(account_list = self.accounts,Basefilename=f"csv-export\Saved-ref-{self.ref}")
+    csvgen.create(account_list = self.accounts,Basefilename=f"csv-export\Saved-ref-{self.ref}")

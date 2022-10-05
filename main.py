@@ -1,6 +1,3 @@
-from colorama import Fore, Style, Back
-from account import Account, Master, load
-from csvgen import csvgen
 from menu import mainmenu
 
 def main():
