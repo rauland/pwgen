@@ -1,7 +1,7 @@
-from doctest import master
 from pwgen import yes_no_prompt, pwinput, secretgen
 from csvgen import csvcreate
 import pickle
+from pathlib import Path
 
 def load():
   savefile = 'saved-accounts\savefile.data'
@@ -53,6 +53,7 @@ class Master:
     input("Press enter to go back to the main menu")
 
   def save(self):
+    Path("saved-accounts").mkdir(parents=True, exist_ok=True)
     savefile = 'saved-accounts\savefile.data'
     f = open(savefile, 'wb')
     pickle.dump(self, f)
