@@ -23,6 +23,7 @@ def csvgen():
                 print(Fore.GREEN + f"Here are your randomly generated {length_pass} character password(s):")
                 for i in range(count_pass):
                     print (Style.RESET_ALL+ secretgen(length_pass))
+            input("Press enter to go back to the main menu")
             break
 
 def csvcreate(length_pass = 0, count_pass = 0, Basefilename="csv-export\passwords", account_list =[]):
