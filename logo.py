@@ -1,7 +1,5 @@
-from colorama import Fore, Style
-
-def print_logo(colour = Fore.GREEN):
-    logo = colour + """\n      
+def print_logo():
+    logo = """\n      
       :::::::::     :::       :::       ::::::::       ::::::::::       ::::    ::: 
      :+:    :+:    :+:       :+:      :+:    :+:      :+:              :+:+:   :+:  
     +:+    +:+    +:+       +:+      +:+             +:+              :+:+:+  +:+   
@@ -11,4 +9,3 @@ def print_logo(colour = Fore.GREEN):
 ###             ###   ###         ########       ##########       ###    ####      
 \n"""
     print(logo)
-    Style.RESET_ALL
