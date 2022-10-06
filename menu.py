@@ -18,11 +18,11 @@ def mainmenu():
     Path("csv-export").mkdir(parents=True, exist_ok=True)
 
     menu = ConsoleMenu("PWGEN", "Simple terminal password manager made in python")
-    function_item = FunctionItem("Password generator", csvgen.generate) # Menu for password generator
-    function_item_1 = FunctionItem("Add password", account.addpw)
-    function_item_2 = FunctionItem("Show list of passwords", account.showpw)
-    function_item_3 = FunctionItem("Save account", account.save)
-    function_item_4 = FunctionItem("Export account", account.export_acc)
+    function_item = FunctionItem("Password generator", csvgen.generate) # Menu item for password generator
+    function_item_1 = FunctionItem("Add password", account.addpw) #Menu item for adding password
+    function_item_2 = FunctionItem("Show list of passwords", account.showpw) #Menu item for showing list of passwords
+    function_item_3 = FunctionItem("Save account", account.save) #Menu item for saving account
+    function_item_4 = FunctionItem("Export account", account.export_acc) #menu item for exporting account
 
     # Adding item menu
     menu.append_item(function_item)
