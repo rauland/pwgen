@@ -27,8 +27,8 @@ def pwinput():
             print(Style.RESET_ALL)
             return PasswordConfirm
 
-def secretgen(length_pass):
+def secretgen(length):
     """Generates password from length param"""
     chars = string.ascii_letters + "!@#$%^&*()" + string.digits
-    password = "".join(secrets.choice(chars) for i in range(length_pass))
+    password = "".join(secrets.choice(chars) for i in range(length))
     return password
