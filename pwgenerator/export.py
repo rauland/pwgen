@@ -2,29 +2,29 @@ import uuid
 from colorama import Fore, Style
 from pwgen import prompt, secretgen
 
-def generate():
-    """Asks params for csvcreate"""
+def lencheck(question, max):
     while True:
         try:
-            length_pass = int(input(Style.RESET_ALL + "How many characters do you want your password to be?: "))
-            if length_pass > 50:
-                raise Exception(f"{length_pass} is too long, it must be lower than 50")
-            count_pass = int(input("How many passwords do you want to generate?: "))
-            if count_pass > 99:
-                raise Exception(f"{count_pass} is too many, it must be lower than 99")
-            answer = prompt("Do you want to create a .csv file?: (Y / N) ")
-        except Exception as e:
+            answer = int(input(Style.RESET_ALL+question))
+            if answer > max:
+                raise Exception(f"{answer} is too many, it must be less than 50")
+        except Exception or UnboundLocalError as e:
             print(Fore.RED + f"ERROR: {e} PLEASE TRY AGAIN!")
             continue
-        else:
-            if answer:
-                create(length_pass, count_pass)
-            else:
-                print(Fore.GREEN + f"Here are your randomly generated {length_pass} character password(s):")
-                for i in range(count_pass):
-                    print (Style.RESET_ALL+ secretgen(length_pass))
-            input("Press enter to go back to the main menu")
-            break
+        return answer
+
+def generator():
+    """Asks params for create"""
+    length_pass = lencheck("How many characters do you want your password to be?: ", 50)
+    count_pass = lencheck("How many passwords do you want to generate?: ", 99)
+    answer = prompt("Do you want to create a .csv file?: (Y / N) ")
+    if answer:
+        create(length_pass, count_pass)
+    else:
+        print(Fore.GREEN + f"Here are your randomly generated {length_pass} character password(s):")
+        for count in range(count_pass):
+            print (Style.RESET_ALL+ secretgen(length_pass))
+    input("Press enter to go back to the main menu")
 
 def create(length_pass = 0, count_pass = 0, Basefilename="csv-export\passwords", account_list =[]):
     """Creates CSV file"""

@@ -1,5 +1,5 @@
 from pwgen import prompt, pwinput, secretgen
-import csvgen
+import export
 import pickle
 
 def load():
@@ -58,4 +58,4 @@ class Master:
     f.close
 
   def export_acc(self):
-    csvgen.create(account_list = self.accounts,Basefilename=f"csv-export\Saved-ref-{self.ref}")
+    export.create(account_list = self.accounts,Basefilename=f"csv-export\Saved-ref-{self.ref}")
