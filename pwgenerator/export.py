@@ -27,11 +27,11 @@ def generator():
             print (Style.RESET_ALL+ secretgen(length))
     input("Press enter to go back to the main menu")
 
-def create(length_pass = 0, count_pass = 0, Basefilename="csv-export\passwords", account_list =[]):
+def create(length = 0, count = 0, Basefilename="csv-export\passwords", account_list =[]):
     """Creates CSV file"""
     filename = f"{Basefilename}-{str(uuid.uuid4())}.csv"
     if account_list == []:
-        account_list = list(secretgen(length_pass)for i in range(count_pass))
+        account_list = list(secretgen(length)for i in range(count))
         with open(filename, "w") as f:
             for row in account_list:
                 for x in row:
