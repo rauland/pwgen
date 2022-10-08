@@ -3,11 +3,12 @@ from colorama import Fore, Style
 from pwgen import prompt, secretgen
 
 def lencheck(question, max):
+    """Checks length of string based off max value"""
     while True:
         try:
             answer = int(input(Style.RESET_ALL+question))
             if answer > max:
-                raise Exception(f"{answer} is too many, it must be less than 50")
+                raise Exception(f"{answer} is too many, it must be less than {max}")
         except Exception or UnboundLocalError as e:
             print(Fore.RED + f"ERROR: {e} PLEASE TRY AGAIN!")
             continue
@@ -15,15 +16,15 @@ def lencheck(question, max):
 
 def generator():
     """Asks params for create"""
-    length_pass = lencheck("How many characters do you want your password to be?: ", 50)
-    count_pass = lencheck("How many passwords do you want to generate?: ", 99)
+    length = lencheck("How many characters do you want your password to be?: ", 50)
+    count = lencheck("How many passwords do you want to generate?: ", 99)
     answer = prompt("Do you want to create a .csv file?: (Y / N) ")
     if answer:
-        create(length_pass, count_pass)
+        create(length, count)
     else:
-        print(Fore.GREEN + f"Here are your randomly generated {length_pass} character password(s):")
-        for count in range(count_pass):
-            print (Style.RESET_ALL+ secretgen(length_pass))
+        print(Fore.GREEN + f"Here are your randomly generated {length} character password(s):")
+        for c in range(count):
+            print (Style.RESET_ALL+ secretgen(length))
     input("Press enter to go back to the main menu")
 
 def create(length_pass = 0, count_pass = 0, Basefilename="csv-export\passwords", account_list =[]):
