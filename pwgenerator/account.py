@@ -55,7 +55,9 @@ class Master:
     savefile = 'saved-accounts\savefile.data'
     f = open(savefile, 'wb')
     pickle.dump(self, f)
+    input("Account successfully saved, press enter to go back to menu")
     f.close
 
   def export_acc(self):
+    input("Account successfully exported, press enter to go back to menu")
     export.create(account_list = self.accounts,Basefilename=f"csv-export\Saved-ref-{self.ref}")
