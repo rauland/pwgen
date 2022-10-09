@@ -6,7 +6,7 @@ Simple password manager made with Python.
 
 **Dependencies:**
 
-To install all libraries type the following into the pwgen directory:
+To install all libraries:
 ```
 pip install -r requirements.txt
 ```
