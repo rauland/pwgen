@@ -1,4 +1,4 @@
-# Password-Manager
+# pwgen
 
 Simple password manager made with Python.
 
@@ -6,7 +6,7 @@ Simple password manager made with Python.
 
 **Dependencies:**
 
-Password-Manager requires: 
+pwgen requires: 
 
 - Python (=> 3.10)
 - Colorama (=> 0.4.5)
