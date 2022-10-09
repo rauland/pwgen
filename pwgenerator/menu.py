@@ -4,9 +4,10 @@ from export import generator
 from account import *
 from pathlib import Path
 from logo import print_logo
+from colorama import Style
 
 def exitmenu():
-    exit(0)
+    print(Style.RESET_ALL + "Resetting Style")
 
 def mainmenu():
     """Function for main menu"""
@@ -27,7 +28,7 @@ def mainmenu():
     function_item_2 = FunctionItem("Show list of passwords", account.showpw) #Menu item for showing list of passwords
     function_item_3 = FunctionItem("Save account", account.save) #Menu item for saving account
     function_item_4 = FunctionItem("Export account", account.export_acc) #menu item for exporting account
-    function_item_5 = FunctionItem("Exit", exitmenu) #exit program function
+    function_item_5 = FunctionItem("Exit", exitmenu, should_exit=True) #exit program function
 
     # Adding item menu
     menu.append_item(function_item)
@@ -37,5 +38,3 @@ def mainmenu():
     menu.append_item(function_item_4)
     menu.append_item(function_item_5)
     menu.show()
-
-mainmenu()

@@ -25,7 +25,7 @@ def generator():
         print(Fore.GREEN + f"Here are your randomly generated {length} character password(s):")
         for c in range(count):
             print (Style.RESET_ALL+ secretgen(length))
-    input("Press enter to go back to the main menu")
+    input(Style.RESET_ALL + "Press enter to go back to the main menu")
 
 def create(length = 0, count = 0, Basefilename="csv-export\passwords", account_list =[]):
     """Creates CSV file"""
