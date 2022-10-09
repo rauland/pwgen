@@ -6,8 +6,7 @@ Simple password manager made with Python.
 
 **Dependencies:**
 
-pwgen requires: 
-
-- Python (=> 3.10)
-- Colorama (=> 0.4.5)
-- console-menu (=> 0.7.1)
+To install all libraries type the following into the pwgen directory:
+```
+pip install -r requirements.txt
+```
