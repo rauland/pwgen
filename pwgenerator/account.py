@@ -29,7 +29,8 @@ class Master:
         username = input("What is the username?:")
         password = prompt(f"Do you want to generate a random password for {url} (Y/N):")
         if password:
-            pw = secretgen(length=16)
+            length = export.lencheck("How many characters do you want your password to be?: ", 50)
+            pw = secretgen(length=length)
             print(pw)
         else: 
             pw = pwinput()
