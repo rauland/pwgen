@@ -58,11 +58,16 @@ class Generate:
         password = "".join(secrets.choice(chars) for i in range(length))
         return password
 
-    def many_secrets(self):
+    def many_secrets(self,length=None,count=None,answer=None,gui=None):
         """Asks params for create"""
-        length = validate.length_check("How many characters do you want your password to be?: ", 50)
-        count = validate.length_check("How many passwords do you want to generate?: ", 99)
-        answer = validate.prompt("Do you want to create a .csv file?: (Y / N) ")
+        if length is None:
+            length = validate.length_check("How many characters do you "
+                                           "want the password to be?: ", 50)
+        if count is None:
+            count = validate.length_check("How many passwords do you want "
+                                          "to generate?: ", 99)
+        if answer is None:
+            answer = validate.prompt("Do you want to create a .csv file?: (Y / N) ")
         if answer:
             account_list = list(generate.secret(length)for _ in range(count))
             create(account_list, True)
@@ -70,7 +75,10 @@ class Generate:
             print(Fore.GREEN + f"Here are your randomly generated {length} character password(s):")
             for _ in range(count):
                 print (Style.RESET_ALL+ generate.secret(length))
-        input(Style.RESET_ALL + "Press enter to go back to the main menu")
+        if gui:
+            return list(generate.secret(length)for _ in range(count))
+        else:
+            input(Style.RESET_ALL + "Press enter to go back to the main menu")
 
 
 validate = Validate()
