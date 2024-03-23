@@ -3,11 +3,12 @@ import string
 import secrets
 from getpass import getpass
 from colorama import Fore, Style
+from export import create
 
 class Validate:
     """Input Class"""
     def __init__(self):
-        self.length = 8
+        pass
 
     def prompt(self, answer):
         """Prompts and checks yes no check"""
@@ -49,12 +50,28 @@ class Validate:
 class Generate:
     """Generate Secrets"""
     def __init__(self):
-        self.length = 8
+        pass
+
     def secret(self, length):
         """Generates password from length param"""
         chars = string.ascii_letters + "!@#$%^&*()" + string.digits
         password = "".join(secrets.choice(chars) for i in range(length))
         return password
+
+    def many_secrets(self):
+        """Asks params for create"""
+        length = validate.length_check("How many characters do you want your password to be?: ", 50)
+        count = validate.length_check("How many passwords do you want to generate?: ", 99)
+        answer = validate.prompt("Do you want to create a .csv file?: (Y / N) ")
+        if answer:
+            account_list = list(generate.secret(length)for _ in range(count))
+            create(account_list, True)
+        else:
+            print(Fore.GREEN + f"Here are your randomly generated {length} character password(s):")
+            for _ in range(count):
+                print (Style.RESET_ALL+ generate.secret(length))
+        input(Style.RESET_ALL + "Press enter to go back to the main menu")
+
 
 validate = Validate()
 generate = Generate()
