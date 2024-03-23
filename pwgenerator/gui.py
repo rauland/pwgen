@@ -21,11 +21,23 @@ class App():
 
         self.l2 = ttk.Label(self.root, text="Enter the password length", bootstyle="info")
         self.l2.pack(pady=10)
-        self.e1 = ttk.Spinbox(self.root, bootstyle="info", validate="focus", validatecommand=(digit_func, '%P'), from_=0, to=100)
+        self.e1 = ttk.Spinbox(
+            self.root,
+            bootstyle="info",
+            validate="focus",
+            validatecommand=(digit_func, '%P'),
+            from_=0, to=100)
+
         self.e1.pack(pady=10)
         self.l3 = ttk.Label(self.root, text="How many passwords?", bootstyle="info")
         self.l3.pack(pady=10)
-        self.c1 = ttk.Spinbox(self.root, bootstyle="primary", validate="focus", validatecommand=(digit_func, '%P'), from_=0, to=100)
+        self.c1 = ttk.Spinbox(
+            self.root,
+            bootstyle="primary",
+            validate="focus",
+            validatecommand=(digit_func, '%P'),
+            from_=0, to=100)
+
         self.c1.pack(pady=10)
         self.b1 = ttk.Button(self.root, text="Submit", bootstyle="primary", command=generator())
         self.b1.pack(padx=5, pady=10)
