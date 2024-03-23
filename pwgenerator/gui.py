@@ -1,7 +1,7 @@
 """GUI Module for PWGEN"""
 import ttkbootstrap as ttk
 # from ttkbootstrap.constants import BOTH, YES
-from export import generator
+from pwgen import generate
 
 class App():
     """APP GUI Class"""
@@ -39,7 +39,9 @@ class App():
             from_=0, to=100)
 
         self.c1.pack(pady=10)
-        self.b1 = ttk.Button(self.root, text="Submit", bootstyle="primary", command=generator())
+        self.b1 = ttk.Button(
+            self.root, text="Submit", bootstyle="primary",
+            command=lambda: output_set(self.e1.get(),self.c1.get(),self.l4))
         self.b1.pack(padx=5, pady=10)
 
         self.l4 = ttk.Label(self.root, text="Output goes here...", bootstyle="info")
@@ -66,6 +68,12 @@ def validate_alpha(x) -> bool:
         return True
     else:
         return True
+
+def output_set(length,count,output):
+    """Get output for GUI"""
+    output_list = generate.many_secrets(int(length),int(count),False,True)
+    label_text = '\n'.join(output_list)
+    output.config(text=label_text)
 
 if __name__ == "__main__":
     app = App()
