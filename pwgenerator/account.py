@@ -34,7 +34,7 @@ class Master(Account):
             password = validate.prompt(
                 f"Do you want to generate a random password for {url} (Y/N):")
             if password:
-                length = export.lencheck(
+                length = validate.length_check(
                     "How many characters do you want your password to be?: ", 50)
                 pw = generate.secret(length=length)
                 print(pw)
@@ -70,4 +70,4 @@ class Master(Account):
         """Export Account as Object"""
         input("Account successfully exported, press enter to go back to menu")
         export.create(account_list=self.accounts,
-                      Basefilename=f"csv-export\Saved-ref-{self.ref}")
+                      basefilename=f"csv-export\Saved-ref-{self.ref}")

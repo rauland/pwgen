@@ -20,6 +20,18 @@ class Validate:
             elif check == "no" or check == "n":
                 return False
 
+    def length_check(self, question, max_length):
+        """Checks length of string based off max_length value"""
+        while True:
+            try:
+                answer = int(input(Style.RESET_ALL+question))
+                if answer > max_length:
+                    raise ValueError(f"{answer} is too long, it must be less than {max_length}")
+            except ValueError:
+                print(Fore.RED + f"ERROR: {ValueError} PLEASE TRY AGAIN!")
+                continue
+            return answer
+
     def input(self):
         """Inputs and confirms custom password"""
         while True:
