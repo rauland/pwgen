@@ -3,3 +3,4 @@ __pycache__/
 csv-export/
 saved-accounts/
 *.data
+env/

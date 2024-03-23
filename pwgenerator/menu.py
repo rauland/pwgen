@@ -16,7 +16,7 @@ def mainmenu():
     try:
         account = load()
     except OSError as e:
-        account = Master("admin@url.com.au","password")    
+        account = Master("admin@url.com.au","password")
 
     # Creates folders if none exist
     Path("saved-accounts").mkdir(parents=True, exist_ok=True)
