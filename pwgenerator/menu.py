@@ -2,10 +2,10 @@
 from pathlib import Path
 from consolemenu import ConsoleMenu
 from consolemenu.items import FunctionItem
-from export import generator
 from account import load, Master
 from logo import print_logo
 from colorama import Style
+from pwgen import generate
 
 def exitmenu():
     """Resets CLI style when existing"""
@@ -28,7 +28,7 @@ def mainmenu():
         epilogue_text="Tip: Type number to select menu item",
         show_exit_option=False)
 
-    function_item = FunctionItem("Password generator", generator)
+    function_item = FunctionItem("Password generator", generate.many_secrets)
     function_item_1 = FunctionItem("Add password", account.addpw)
     function_item_2 = FunctionItem("Show list of passwords", account.showpw)
     function_item_3 = FunctionItem("Save account", account.save)
