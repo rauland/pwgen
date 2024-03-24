@@ -7,9 +7,6 @@ from export import create
 
 class Validate:
     """Input Class"""
-    def __init__(self):
-        pass
-
     def prompt(self, answer):
         """Prompts and checks yes no check"""
         while True:
@@ -49,9 +46,6 @@ class Validate:
 
 class Generate:
     """Generate Secrets"""
-    def __init__(self):
-        pass
-
     def secret(self, length):
         """Generates password from length param"""
         chars = string.ascii_letters + "!@#$%^&*()" + string.digits
