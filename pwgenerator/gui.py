@@ -10,6 +10,7 @@ class App():
         self.root = ttk.Window(themename="superhero")
         self.root.title("PWGEN")
         self.root.geometry("640x480")
+        self.account = load()
         # Create Menubar
         menubar = Menubar(self.root)
         self.root.config(menu=menubar)
