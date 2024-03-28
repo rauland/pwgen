@@ -1,6 +1,8 @@
 """GUI Module for PWGEN"""
 import ttkbootstrap as ttk
 # from ttkbootstrap.constants import BOTH, YES
+# from pathlib import Path
+from PIL import Image, ImageChops
 from account import load, Account
 from pwgen import generate
 
@@ -10,6 +12,9 @@ class App():
         self.root = ttk.Window(themename="superhero")
         self.root.title("PWGEN")
         self.root.geometry("640x480")
+
+        self.root.iconbitmap(r'src/pwgen.ico')
+        # Creates a generic master account if one is not found
         self.account = load()
         # Create Menubar
         menubar = Menubar(self.root)
@@ -19,15 +24,21 @@ class App():
         tabs.grid(row=0, column=0)
         tabs.pack(side="left",fill="y")
 
-        button1 = ttk.Button(tabs, text="Gen",
-                            command=lambda: self.show_frame("PwgenForm"),bootstyle="secondary", width=6)
-        button2 = ttk.Button(tabs, text="Add",
+        self.button1photo = load_image(r'src\cycle_FILL0_wght400_GRAD0_opsz24.png') # Gen
+        self.button2photo = load_image(r'src/add_box_FILL0_wght400_GRAD0_opsz24.png') # Add
+        self.button3photo = load_image(r'src\folder_open_FILL0_wght400_GRAD0_opsz24.png') # Show
+        self.button4photo = load_image(r'src\save_FILL0_wght400_GRAD0_opsz24.png') # Save
+        self.button5photo = load_image(r'src\output_FILL0_wght400_GRAD0_opsz24.png') # Export
+
+        button1 = ttk.Button(tabs, text="Gen", image=self.button1photo,compound='top', # Gen
+                            command=lambda: self.show_frame("PwgenForm"),bootstyle="secondary", width=6,)
+        button2 = ttk.Button(tabs, text='Add',image=self.button2photo,compound='top',  # Add
                             command=lambda: self.show_frame("AddForm"),bootstyle="secondary", width=6)
-        button3 = ttk.Button(tabs, text="Show",
+        button3 = ttk.Button(tabs, text="Show",image=self.button3photo,compound='top', # Show
                             command=lambda: self.show_frame("ShowList"),bootstyle="secondary", width=6)
-        button4 = ttk.Button(tabs, text="Save",
+        button4 = ttk.Button(tabs, text="Save",image=self.button4photo,compound='top', # Save
                             command=save,bootstyle="secondary", width=6)
-        button5 = ttk.Button(tabs, text="Export",
+        button5 = ttk.Button(tabs, text="Export",image=self.button5photo,compound='top', # Export
                             command=lambda: self.show_frame("PwgenForm"),bootstyle="secondary", width=6)
         side_butpad={'ipady': 8, 'padx': 1, 'pady': 1}
         button1.pack(side_butpad)
@@ -36,7 +47,7 @@ class App():
         button4.pack(side_butpad)
         button5.pack(side_butpad)
 
-        seperator = ttk.Frame(self.root, bootstyle="secondary", width=1, borderwidth=1, relief="sunken")
+        seperator = ttk.Frame(self.root, bootstyle="secondary", width=2, borderwidth=2, relief="solid")
         seperator.pack(side="left", fill="y")
 
         # Container
@@ -239,6 +250,18 @@ def add(url,user,pw):
 
 def save():
     account.save(True)
+
+def load_image(input_path):
+    """Loads image from file"""
+    image = Image.open(input_path)
+    r, g, b, a = image.split()
+    r = ImageChops.invert(r)
+    g = ImageChops.invert(g)
+    b = ImageChops.invert(b)
+
+    inverted_image = Image.merge('RGBA', (r, g, b, a))
+    
+    return ttk.ImageTk.PhotoImage(inverted_image)
 
 if __name__ == "__main__":
     account = load()
