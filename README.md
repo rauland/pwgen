@@ -9,3 +9,7 @@ To install all libraries:
 ```
 pip install -r requirements.txt
 ```
+
+## Symbols
+
+Symbols provided by: [Google Material Symbols](https://fonts.google.com/icons?icon.platform=web)

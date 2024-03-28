@@ -1,8 +1,7 @@
 """Menu Module for PWGEN"""
-from pathlib import Path
 from consolemenu import ConsoleMenu
 from consolemenu.items import FunctionItem
-from account import load, Master
+from account import load
 from logo import print_logo
 from colorama import Style
 from pwgen import generate
@@ -14,14 +13,7 @@ def exitmenu():
 def mainmenu():
     """Function for main menu"""
     # Creates a generic master account if one is not found
-    try:
-        account = load()
-    except OSError:
-        account = Master("admin@url.com.au","password")
-
-    # Creates folders if none exist
-    Path("saved-accounts").mkdir(parents=True, exist_ok=True)
-    Path("csv-export").mkdir(parents=True, exist_ok=True)
+    account = load()
 
     menu = ConsoleMenu(
         print_logo,

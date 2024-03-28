@@ -1,6 +1,9 @@
 """GUI Module for PWGEN"""
 import ttkbootstrap as ttk
 # from ttkbootstrap.constants import BOTH, YES
+# from pathlib import Path
+from PIL import Image, ImageChops
+from account import load, Account
 from pwgen import generate
 
 class App():
@@ -9,6 +12,10 @@ class App():
         self.root = ttk.Window(themename="superhero")
         self.root.title("PWGEN")
         self.root.geometry("640x480")
+
+        self.root.iconbitmap(r'src/pwgen.ico')
+        # Creates a generic master account if one is not found
+        self.account = load()
         # Create Menubar
         menubar = Menubar(self.root)
         self.root.config(menu=menubar)
@@ -17,23 +24,30 @@ class App():
         tabs.grid(row=0, column=0)
         tabs.pack(side="left",fill="y")
 
-        button1 = ttk.Button(tabs, text="Gen",
-                            command=lambda: self.show_frame("PwgenForm"),bootstyle="secondary", width=6)
-        button2 = ttk.Button(tabs, text="Add",
-                            command=lambda: self.show_frame("PageOne"),bootstyle="secondary", width=6)
-        button3 = ttk.Button(tabs, text="Show",
-                            command=lambda: self.show_frame("PageTwo"),bootstyle="secondary", width=6)
-        button4 = ttk.Button(tabs, text="Save",
-                            command=lambda: self.show_frame("PageOne"),bootstyle="secondary", width=6)
-        button5 = ttk.Button(tabs, text="Export",
-                            command=lambda: self.show_frame("PageTwo"),bootstyle="secondary", width=6)
-        button1.pack(side="top")
-        button2.pack()
-        button3.pack()
-        button4.pack()
-        button5.pack()
+        self.button1photo = load_image(r'src\cycle_FILL0_wght400_GRAD0_opsz24.png') # Gen
+        self.button2photo = load_image(r'src/add_box_FILL0_wght400_GRAD0_opsz24.png') # Add
+        self.button3photo = load_image(r'src\folder_open_FILL0_wght400_GRAD0_opsz24.png') # Show
+        self.button4photo = load_image(r'src\save_FILL0_wght400_GRAD0_opsz24.png') # Save
+        self.button5photo = load_image(r'src\output_FILL0_wght400_GRAD0_opsz24.png') # Export
 
-        seperator = ttk.Frame(self.root, bootstyle="secondary", width=1, borderwidth=1, relief="sunken")
+        button1 = ttk.Button(tabs, text="Gen", image=self.button1photo,compound='top', # Gen
+                            command=lambda: self.show_frame("PwgenForm"),bootstyle="secondary", width=6,)
+        button2 = ttk.Button(tabs, text='Add',image=self.button2photo,compound='top',  # Add
+                            command=lambda: self.show_frame("AddForm"),bootstyle="secondary", width=6)
+        button3 = ttk.Button(tabs, text="Show",image=self.button3photo,compound='top', # Show
+                            command=lambda: self.show_frame("ShowList"),bootstyle="secondary", width=6)
+        button4 = ttk.Button(tabs, text="Save",image=self.button4photo,compound='top', # Save
+                            command=save,bootstyle="secondary", width=6)
+        button5 = ttk.Button(tabs, text="Export",image=self.button5photo,compound='top', # Export
+                            command=lambda: self.show_frame("PwgenForm"),bootstyle="secondary", width=6)
+        side_butpad={'ipady': 8, 'padx': 1, 'pady': 1}
+        button1.pack(side_butpad)
+        button2.pack(side_butpad)
+        button3.pack(side_butpad)
+        button4.pack(side_butpad)
+        button5.pack(side_butpad)
+
+        seperator = ttk.Frame(self.root, bootstyle="secondary", width=2, borderwidth=2, relief="solid")
         seperator.pack(side="left", fill="y")
 
         # Container
@@ -44,7 +58,7 @@ class App():
 
         # Select Frames
         self.frames = {}
-        for F in (PwgenForm, PageOne, PageTwo):
+        for F in (PwgenForm, AddForm, ShowList):
             page_name = F.__name__
             frame = F(master=container,controller=self)
             self.frames[page_name] = frame
@@ -111,8 +125,8 @@ class PwgenForm(ttk.Frame):
             validatecommand=(digit_func, '%P'),
             from_=0,
             to=100)
-
         self.c1.pack(pady=10)
+
         self.b1 = ttk.Button(self,
             text="Submit",
             bootstyle="primary",
@@ -136,6 +150,51 @@ class PwgenForm(ttk.Frame):
         # button1.pack()
         # button2.pack()
 
+class AddForm(ttk.Frame):
+    """Add Form Frame"""
+    def __init__(self, master, controller=None):
+        ttk.Frame.__init__(self, master)
+        self.controller = controller
+
+        self.l1 = ttk.Label(self, text="Add Account", font=("Helvetica", 16))
+        self.l1.pack(pady=12)
+
+        self.l2 = ttk.Label(self, text="URL:", font=("Helvetica", 10))
+        self.l2.pack(pady=6)
+        self.e2 = ttk.Entry(self)
+        self.e2.pack(pady=6)
+
+        self.l3 = ttk.Label(self, text="Username:", font=("Helvetica", 10))
+        self.l3.pack(pady=6)
+        self.e3 = ttk.Entry(self)
+        self.e3.pack(pady=6)
+
+        self.l4 = ttk.Label(self, text="Password:", font=("Helvetica", 10))
+        self.l4.pack(pady=6)
+        self.e4 = ttk.Entry(self)
+        self.e4.pack(pady=6)
+
+        self.b1 = ttk.Button(self,
+        text="Submit",
+        bootstyle="primary",
+        command=lambda: add(self.e2.get(),self.e3.get(),self.e4.get()))
+        self.b1.pack(padx=5, pady=10)
+
+class ShowList(ttk.Frame):
+    """Show List Frame"""
+    def __init__(self, master, controller=None):
+        ttk.Frame.__init__(self, master)
+        self.controller = controller
+
+        self.l1 = ttk.Label(self, text="Saved Accounts", font=("Helvetica", 16))
+        self.l1.pack(pady=12)
+
+        self.l4 = ttk.Text(self)
+        # self.l4.insert(1.0, "Output goes here...")
+        # self.l4.configure(state="disabled", width=72)
+
+        show(self.l4)
+
 class Validate():
     """GUI Field Validation"""
     def number(self, x) -> bool:
@@ -157,6 +216,8 @@ class Validate():
         else:
             return True
 
+validate = Validate()
+
 def generate_set(length, count, text):
     """Sets output for GUI"""
     if validate.number(length) and validate.number(count):
@@ -169,31 +230,40 @@ def generate_set(length, count, text):
     text.insert(1.0, output)
     text.configure(state="disabled")
 
-validate = Validate()
+def show(label):
+    if account.accounts == []:
+        label.insert(1.0, "No passwords have been added yet")
+    else:
+        output = ""
+        for acc in account.accounts:
+            output += f'URL: {acc.url}\n'
+            output += f'Username: {acc.username}\n'
+            output += f'Password: {acc.password}\n'
+            output += '\n'
+        label.insert(1.0, output)
 
-class PageOne(ttk.Frame):
+    label.configure(state="disabled", width=72)
+    label.pack(side="left", fill="both", expand=True)
 
-    def __init__(self, master, controller=None):
-        ttk.Frame.__init__(self, master)
-        self.controller = controller
-        label = ttk.Label(self, text="This is page 1")
-        label.pack(side="top", fill="x", pady=10)
-        button = ttk.Button(self, text="Go to the start page",
-                           command=lambda: controller.show_frame("PwgenForm"))
-        button.pack()
+def add(url,user,pw):
+    account.accounts += [Account(user, pw, url)]
 
+def save():
+    account.save(True)
 
-class PageTwo(ttk.Frame):
+def load_image(input_path):
+    """Loads image from file"""
+    image = Image.open(input_path)
+    r, g, b, a = image.split()
+    r = ImageChops.invert(r)
+    g = ImageChops.invert(g)
+    b = ImageChops.invert(b)
 
-    def __init__(self, master, controller=None):
-        ttk.Frame.__init__(self, master)
-        self.controller = controller
-        label = ttk.Label(self, text="This is page 2")
-        label.pack(side="top", fill="x", pady=10)
-        button = ttk.Button(self, text="Go to the start page",
-                           command=lambda: controller.show_frame("PwgenForm"))
-        button.pack()
+    inverted_image = Image.merge('RGBA', (r, g, b, a))
+    
+    return ttk.ImageTk.PhotoImage(inverted_image)
 
 if __name__ == "__main__":
+    account = load()
     app = App()
     app.run()

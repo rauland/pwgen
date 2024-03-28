@@ -1,15 +1,24 @@
 """Account"""
+from pathlib import Path
 import pickle
 import export
-from pwgen import validate, generate
+from validate import validate
+from pwgen import generate
 
 def load():
     """Loads existing account on first load"""
-    savefile = r'saved-accounts\savefile.data'
-    f = open(savefile, 'rb')
-    account = pickle.load(f)
-    f.close()
-    return account
+    # Creates folders if none exist
+    Path("saved-accounts").mkdir(parents=True, exist_ok=True)
+    Path("csv-export").mkdir(parents=True, exist_ok=True)
+    # Creates a generic master account if one is not found
+    try:
+        savefile = r'saved-accounts\savefile.data'
+        f = open(savefile, 'rb')
+        account = pickle.load(f)
+        f.close()
+        return account
+    except OSError:
+        return Master("admin@url.com.au","password")
 
 class Account:
     """Base Account"""
@@ -58,12 +67,14 @@ class Master(Account):
             print('')
         input("Press enter to go back to the main menu")
 
-    def save(self):
+    def save(self,confirm = False):
         """Save Function"""
         savefile = r'saved-accounts\savefile.data'
         f = open(savefile, 'wb')
         pickle.dump(self, f)
-        input("Account successfully saved, press enter to go back to menu")
+        print("Account successfully saved, press enter to go back to menu")
+        if not confirm:
+            input()
         f.close()
 
     def export_acc(self):
