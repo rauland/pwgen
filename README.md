@@ -1,5 +1,5 @@
 # pwgen-gui
-![image](https://github.com/rauland/pwgen/assets/30706122/25d86353-05a0-4d54-9572-c70b80b98996)
+![image](https://github.com/rauland/pwgen-gui/assets/30706122/b843993b-83f3-4a74-a0ca-acfa96e219d6)
 
 ## Installation
 
