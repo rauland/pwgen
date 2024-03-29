@@ -72,9 +72,9 @@ class Master(Account):
         savefile = r'saved-accounts\savefile.data'
         f = open(savefile, 'wb')
         pickle.dump(self, f)
-        print("Account successfully saved, press enter to go back to menu")
+        print("Account successfully saved!")
         if not confirm:
-            input()
+            input('Press enter to go back to menu')
         f.close()
 
     def export_acc(self):

@@ -9,10 +9,10 @@ from pwgen import generate
 class App():
     """APP GUI Class"""
     def __init__(self):
-        self.root = ttk.Window(themename="superhero")
+        self.root = ttk.Window(themename="darkly")
         self.root.title("PWGEN")
         self.root.geometry("640x480")
-
+        self.root.minsize(550,400)
         self.root.iconbitmap(r'src/pwgen.ico')
         # Creates a generic master account if one is not found
         self.account = load()
@@ -24,22 +24,51 @@ class App():
         tabs.grid(row=0, column=0)
         tabs.pack(side="left",fill="y")
 
-        self.button1photo = load_image(r'src\cycle_FILL0_wght400_GRAD0_opsz24.png') # Gen
+        self.button1photo = load_image(r'src/cycle_FILL0_wght400_GRAD0_opsz24.png') # Gen
         self.button2photo = load_image(r'src/add_box_FILL0_wght400_GRAD0_opsz24.png') # Add
-        self.button3photo = load_image(r'src\folder_open_FILL0_wght400_GRAD0_opsz24.png') # Show
-        self.button4photo = load_image(r'src\save_FILL0_wght400_GRAD0_opsz24.png') # Save
-        self.button5photo = load_image(r'src\output_FILL0_wght400_GRAD0_opsz24.png') # Export
+        self.button3photo = load_image(r'src/folder_open_FILL0_wght400_GRAD0_opsz24.png') # Show
+        self.button4photo = load_image(r'src/save_FILL0_wght400_GRAD0_opsz24.png') # Save
+        self.button5photo = load_image(r'src/output_FILL0_wght400_GRAD0_opsz24.png') # Export
 
-        button1 = ttk.Button(tabs, text="Gen", image=self.button1photo,compound='top', # Gen
-                            command=lambda: self.show_frame("PwgenForm"),bootstyle="secondary", width=6,)
-        button2 = ttk.Button(tabs, text='Add',image=self.button2photo,compound='top',  # Add
-                            command=lambda: self.show_frame("AddForm"),bootstyle="secondary", width=6)
-        button3 = ttk.Button(tabs, text="Show",image=self.button3photo,compound='top', # Show
-                            command=lambda: self.show_frame("ShowList"),bootstyle="secondary", width=6)
-        button4 = ttk.Button(tabs, text="Save",image=self.button4photo,compound='top', # Save
-                            command=save,bootstyle="secondary", width=6)
-        button5 = ttk.Button(tabs, text="Export",image=self.button5photo,compound='top', # Export
-                            command=lambda: self.show_frame("PwgenForm"),bootstyle="secondary", width=6)
+        button1 = ttk.Button(
+            tabs,
+            text="Gen",
+            image=self.button1photo,
+            compound='top', # Gen
+            command=lambda: self.show_frame("PwgenForm"),
+            bootstyle="secondary",
+            width=6,)
+        button2 = ttk.Button(
+            tabs,
+            text='Add',
+            image=self.button2photo,
+            compound='top',  # Add
+            command=lambda: self.show_frame("AddForm"),
+            bootstyle="secondary",
+            width=6,)
+        button3 = ttk.Button(
+            tabs,
+            text="Show",
+            image=self.button3photo,
+            compound='top', # Show
+            command=lambda: self.show_frame("ShowList"),
+            bootstyle="secondary",
+            width=6)
+        button4 = ttk.Button(
+            tabs,
+            text="Save",
+            image=self.button4photo,compound='top', # Save
+            command=save,
+            bootstyle="secondary",
+            width=6)
+        button5 = ttk.Button(
+            tabs,
+            text="Export",
+            image=self.button5photo,compound='top', # Export
+            command=lambda: self.show_frame("PwgenForm"),
+            bootstyle="secondary",
+            width=6)
+
         side_butpad={'ipady': 8, 'padx': 1, 'pady': 1}
         button1.pack(side_butpad)
         button2.pack(side_butpad)
@@ -47,7 +76,12 @@ class App():
         button4.pack(side_butpad)
         button5.pack(side_butpad)
 
-        seperator = ttk.Frame(self.root, bootstyle="secondary", width=2, borderwidth=2, relief="solid")
+        seperator = ttk.Frame(
+            self.root,
+            bootstyle="secondary",
+            width=2,
+            borderwidth=2,
+            relief="solid")
         seperator.pack(side="left", fill="y")
 
         # Container
@@ -81,9 +115,9 @@ class Menubar(ttk.Menu):
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
         filemenu = ttk.Menu(self, tearoff=0)
-        filemenu.add_command(label="New")
-        filemenu.add_command(label="Open")
-        filemenu.add_command(label="Save")
+        # filemenu.add_command(label="New")
+        # filemenu.add_command(label="Open")
+        filemenu.add_command(label="Save",command=save)
         filemenu.add_separator()
         filemenu.add_command(label="Exit", command=self.master.quit)
         self.add_cascade(label="File", menu=filemenu)
@@ -101,38 +135,94 @@ class PwgenForm(ttk.Frame):
         digit_func = self.register(validate.number)
         # alpha_func = self.register(validate.alpha)
 
-        self.l1 = ttk.Label(self, text="Password Generator", font=("Helvetica", 16))
+        self.container_frame = ttk.Frame(self)
+        self.container_frame.pack()
+
+        self.f0 = ttk.Frame(self.container_frame)
+        self.f0.pack(side="top")
+
+        self.f1 = ttk.Frame(self.container_frame)
+        self.f1.pack(side="left")
+
+        self.s1 = ttk.Frame(self.f1)
+        self.s1.pack(side="right",padx=32)
+
+        self.f2 = ttk.Labelframe(self.container_frame,text="Password Strength")
+        self.f2.pack(side="right")
+
+
+        self.l1 = ttk.Label(self.f0, text="Password Generator", font=("Helvetica", 16))
         self.l1.pack(pady=10)
 
-        self.l2 = ttk.Label(self, text="Enter the password length", font=("Helvetica", 10))
+        self.l2 = ttk.Label(self.f1, text="Enter the password length", font=("Helvetica", 10))
         self.l2.pack(pady=10)
-        self.e1 = ttk.Spinbox(self,
-            bootstyle="primary",
-            validate="focus",
+        self.e1 = ttk.Spinbox(self.f1,
+            validate="key",
             validatecommand=(digit_func, '%P'),
             from_=0,
             to=100)
-
+        self.e1.set(8)
         self.e1.pack(pady=10)
-        self.l3 = ttk.Label(self,
+
+        self.l3 = ttk.Label(self.f1,
             text="How many passwords?",
             font=("Helvetica", 10))
 
         self.l3.pack(pady=10)
-        self.c1 = ttk.Spinbox(self,
-            bootstyle="primary",
-            validate="focus",
+        self.c1 = ttk.Spinbox(self.f1,
+            validate="key",
             validatecommand=(digit_func, '%P'),
             from_=0,
             to=100)
+        self.c1.set(8)
         self.c1.pack(pady=10)
 
-        self.b1 = ttk.Button(self,
-            text="Submit",
-            bootstyle="primary",
-            command=lambda: generate_set(self.e1.get(),self.c1.get(),self.l4))
+        # Check boxes
+
+        lower = ttk.BooleanVar(value=True)
+        higher = ttk.BooleanVar(value=True)
+        special = ttk.BooleanVar(value=True)
+        digits = ttk.BooleanVar(value=True)
+
+        self.checkbox_options = {'onvalue': True, 'offvalue': False}
+        self.ch1 = ttk.Checkbutton(self.f2,
+            **self.checkbox_options,
+            variable=lower,
+            text='LowerCase')
+        self.ch1.pack(pady=6,anchor=ttk.W,padx=32)
+
+        self.ch2 = ttk.Checkbutton(self.f2,
+            **self.checkbox_options,
+            variable=higher,
+            text='UpperCase')
+        self.ch2.pack(pady=6,anchor=ttk.W,padx=32)
+
+        self.ch3 = ttk.Checkbutton(self.f2,
+            **self.checkbox_options,
+            variable=special,
+            text='Special')
+        self.ch3.pack(pady=6,anchor=ttk.W,padx=32)
+
+        self.ch4 = ttk.Checkbutton(self.f2,
+            **self.checkbox_options,
+            variable=digits,
+            text='Digits')
+        self.ch4.pack(pady=6,anchor=ttk.W,padx=32)
+
+        self.b1 = ttk.Button(self.f1,
+        text="Submit",
+        bootstyle="primary",
+        command=lambda: generate_set(
+            self.e1.get(),
+            self.c1.get(),
+            self.l4,
+            lower=lower.get(),
+            higher=higher.get(),
+            special=special.get(),
+            digits=digits.get()))
         self.b1.pack(padx=5, pady=10)
 
+        # Text output
         self.l4 = ttk.Text(self)
         self.l4.insert(1.0, "Output goes here...")
         self.l4.configure(state="disabled", width=72)
@@ -171,7 +261,7 @@ class AddForm(ttk.Frame):
 
         self.l4 = ttk.Label(self, text="Password:", font=("Helvetica", 10))
         self.l4.pack(pady=6)
-        self.e4 = ttk.Entry(self)
+        self.e4 = ttk.Entry(self, show="*")
         self.e4.pack(pady=6)
 
         self.b1 = ttk.Button(self,
@@ -218,10 +308,13 @@ class Validate():
 
 validate = Validate()
 
-def generate_set(length, count, text):
+def generate_set(length, count, text,**kwargs):
     """Sets output for GUI"""
-    if validate.number(length) and validate.number(count):
-        output = generate.many_secrets(int(length),int(count),False,True)
+
+    if all(not value for value in kwargs.values()):
+        output = "Error: Need atleast 1 checkbox selected"
+    elif validate.number(length) and validate.number(count):
+        output = generate.many_secrets(int(length),int(count),False,True,**kwargs)
         output = '\n'.join(output)
     else:
         output = "Error: No Characters or Length or Amount over 100"
@@ -231,6 +324,7 @@ def generate_set(length, count, text):
     text.configure(state="disabled")
 
 def show(label):
+    """GUI Show Accounts Function"""
     if account.accounts == []:
         label.insert(1.0, "No passwords have been added yet")
     else:
@@ -246,9 +340,11 @@ def show(label):
     label.pack(side="left", fill="both", expand=True)
 
 def add(url,user,pw):
+    """GUI Add Account Function"""
     account.accounts += [Account(user, pw, url)]
 
 def save():
+    """GUI Save Account"""
     account.save(True)
 
 def load_image(input_path):
@@ -260,7 +356,7 @@ def load_image(input_path):
     b = ImageChops.invert(b)
 
     inverted_image = Image.merge('RGBA', (r, g, b, a))
-    
+
     return ttk.ImageTk.PhotoImage(inverted_image)
 
 if __name__ == "__main__":

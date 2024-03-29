@@ -7,13 +7,26 @@ from validate import validate
 
 class Generate:
     """Generate Secrets"""
-    def secret(self, length):
+    def secret(self, length, **kwargs):
         """Generates password from length param"""
-        chars = string.ascii_letters + "!@#$%^&*()" + string.digits
-        password = "".join(secrets.choice(chars) for i in range(length))
+        print("Received kwargs secret:", kwargs)
+        lower = kwargs.get('lower', True)
+        higher = kwargs.get('higher', True)
+        special = kwargs.get('special', True)
+        digits = kwargs.get('digits', True)
+        chars = ""
+        # Lower, higher, special, and digits will default to True
+        # unless explicitly set to False in kwargs
+
+        chars = f"{string.ascii_lowercase if lower else ''}" \
+             f"{string.ascii_uppercase if higher else ''}" \
+             f"{string.punctuation if special else ''}" \
+             f"{string.digits if digits else ''}"
+
+        password = "".join(secrets.choice(chars) for _ in range(length))
         return password
 
-    def many_secrets(self,length=None,count=None,answer=None,gui=None):
+    def many_secrets(self,length=None,count=None,answer=None,gui=None,**kwargs):
         """Asks params for create"""
         if length is None:
             length = validate.length_check("How many characters do you "
@@ -31,7 +44,7 @@ class Generate:
             for _ in range(count):
                 print (Style.RESET_ALL+ generate.secret(length))
         if gui:
-            return list(generate.secret(length)for _ in range(count))
+            return list(generate.secret(length,**kwargs)for _ in range(count))
         else:
             input(Style.RESET_ALL + "Press enter to go back to the main menu")
 
